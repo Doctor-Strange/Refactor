@@ -315,7 +315,7 @@ const Edit_profile = ({
               onCropComplete={onCropComplete}
               onZoomChange={setZoom}
               cropShape="round"
-              cropSize={{ width: 200, height: 200 }}
+              cropSize={{ width: 200, height: 500 }}
             />
             <div className="Crop_BTN_container">
               <span className="Blue_BTN local_class" onClick={showCroppedImage}>
