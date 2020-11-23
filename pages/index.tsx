@@ -3,10 +3,10 @@ import { NextSeo } from "next-seo";
 import Layout from "../src/Layout";
 import Search from "../src/containers/Search";
 import insurance from "../public/image/SamanInsurance.png";
-import "../src/styles/pages/index.scss";
 import Link from "next/link";
 import language from "../public/languages/fa/homepage.json";
 import { logPageView } from "../utils/analytics";
+import styles from "../src/styles/pages/index.module.scss";
 
 const HomePage = () => {
   React.useEffect(() => {
@@ -30,11 +30,11 @@ const HomePage = () => {
           cardType: language.next_seo.cardType,
         }}
       />
-      <article className='Homepage'>
-        <div className='banner'>
+      <article className={styles.Homepage}>
+        <div className={styles.banner}>
           <h1>{language.banner_h1}</h1>
           <h2>{language.banner_h2}</h2>
-          <div className='search_container responsive'>
+          <div className={`${styles.search_container} responsive`}>
             {/* Render search box in the Home page */}
             <Search language={language} />
           </div>
@@ -43,7 +43,7 @@ const HomePage = () => {
           <p>با همکاری</p>
           <img src={insurance} alt='تصویر بیمه سامان' />
         </div>
-        <div className=' responsive second_container'>
+        <div className='responsive second_container'>
           <div className='full_width'>
             <h2>{language.second_container_full_width_h2}</h2>
             <p>{language.second_container_full_width_p}</p>

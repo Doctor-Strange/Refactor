@@ -13,7 +13,6 @@ import React, { useContext, useEffect, useState } from "react";
 import Nouislider from "nouislider-react";
 // Had to import noUiSlider and filter style file modular, to work correctly
 import "./price_filter.scss";
-import "nouislider/distribute/nouislider.css";
 
 import filterContext from "../../../context/filter-context";
 

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 
-import "react-modern-calendar-datepicker/lib/DatePicker.css";
 import DatePicker, { DayRange, utils } from "react-modern-calendar-datepicker";
 import moment from "moment-jalaali";
 
@@ -9,7 +8,7 @@ import { REQUEST_GET_LOCATION } from "../../API/index";
 
 import Router from "next/router";
 
-// import "./search.scss";
+import styles from "./search.module.scss";
 import Button from "../../components/form/Button";
 
 import modal_context from "../../context/Modal_context";
@@ -175,13 +174,13 @@ const Search = ({ dynamic, searchSubmit, language }: ISearch) => {
   };
 
   return (
-    <section className='search_box'>
+    <section className={styles.search_box}>
       <form
         data-test-id='GotoSearchResult'
         onSubmit={(e) => GotoSearchResult(e)}
       >
-        <div className='search_box_div'>
-          <p className='label'>{language.search.label_location}</p>
+        <div className={styles.search_box_div}>
+          <p className={styles.label}>{language.search.label_location}</p>
           <DropdownSearch
             data={locationsList}
             InputDisable={true}
@@ -199,40 +198,41 @@ const Search = ({ dynamic, searchSubmit, language }: ISearch) => {
             // clearField={() => setLocationId(1)}
           />
         </div>
-        <div className='Date_picker_container'>
+        <div className={styles.Date_picker_container}>
           <div
             className={[
-              "date_Input_Container",
+              styles.date_Input_Container,
               dayRange.from
                 ? dayRange.to
-                  ? "PushToRight"
-                  : "PushToLeft"
-                : "PushToRight",
+                  ? styles.PushToRight
+                  : styles.PushToLeft
+                : styles.PushToRight,
             ].join(" ")}
             onClick={() => setShowBorder(true)}
           >
             <DatePicker
               value={dayRange}
               onChange={setDayRange}
+              wrapperClassName={styles.DatePicker}
               shouldHighlightWeekends
               minimumDate={utils("fa").getToday()}
               locale='fa'
               colorPrimary='#4ba3ce'
               // disabledDays={[utils("fa").getToday()]}
             />
-            <div className='input_container'>
-              <p className='label'>{language.search.label_start_date}</p>
+            <div className={styles.input_container}>
+              <p className={styles.label}>{language.search.label_start_date}</p>
               <input
                 data-hj-allow
                 className={
                   fromError.status
-                    ? "input_Error"
+                    ? styles.input_Error
                     : showBorder
                     ? dayRange.from
                       ? dayRange.to
-                        ? "activeBorder"
+                        ? styles.activeBorder
                         : null
-                      : "activeBorder"
+                      : styles.activeBorder
                     : null
                 }
                 readOnly={true}
@@ -241,21 +241,21 @@ const Search = ({ dynamic, searchSubmit, language }: ISearch) => {
               {/* appear the error for the start date here */}
               <span>{fromError.message}</span>
             </div>
-            <div className='input_container'>
-              <p className='label'>{language.search.label_end_date}</p>
+            <div className={styles.input_container}>
+              <p className={styles.label}>{language.search.label_end_date}</p>
               <input
                 data-hj-allow
                 className={[
-                  "exception_input",
+                  styles.exception_input,
                   toError.status
-                    ? "input_Error"
+                    ? styles.input_Error
                     : showBorder
                     ? dayRange.to
                       ? dayRange.from
                         ? null
                         : null
                       : dayRange.from
-                      ? "activeBorder"
+                      ? styles.activeBorder
                       : null
                     : null,
                 ].join(" ")}
@@ -267,11 +267,11 @@ const Search = ({ dynamic, searchSubmit, language }: ISearch) => {
             </div>
           </div>
         </div>
-        <div className='search_box_div'>
-          <p className='Search_Text_transparent'>search</p>
+        <div className={styles.search_box_div}>
+          <p className={styles.Search_Text_transparent}>search</p>
           <Button
             value={language.search.btn}
-            class='Blue_BTN search_Btn HEAP_Home_Btn_Search'
+            class={`Blue_BTN ${styles.search_Btn} HEAP_Home_Btn_Search`}
             loading={loading}
             click={() => {}}
           />

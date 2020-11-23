@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
-import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import React, { useState, useEffect, useRef } from "react"; 
 import DatePicker, { DayRange, utils } from "react-modern-calendar-datepicker";
 import moment from "moment-jalaali";
 // import "./PriceBox.scss";

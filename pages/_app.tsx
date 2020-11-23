@@ -11,6 +11,10 @@ import { initGA } from "../utils/analytics";
 import { REQUEST_GET_USER_INFO } from "../src/API";
 import jsCookie from "js-cookie";
 import user_context from "../src/context/User_info";
+import "../src/styles/main.scss";
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import "nouislider/distribute/nouislider.css";
+
 
 Sentry.init({
   dsn: process.env.SENTRY,

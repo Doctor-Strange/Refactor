@@ -3,11 +3,6 @@ import Router from "next/router";
 import Footer from "../components/Footer";
 import Header from "../containers/header";
 import logo from "../../public/android-icon-48x48.png";
-
-// Main Scss file
-// All Scss files are imported to the main.scss
-import "../styles/main.scss";
-
 // Modal Context
 import modal_context from "../context/Modal_context";
 
@@ -68,7 +63,7 @@ const Layout = (props: ILayout) => {
   const TOAST_CONTEXT = useContext(toast_context);
 
   useEffect(() => {
-    window.addEventListener("beforeinstallprompt", (e) => { 
+    window.addEventListener("beforeinstallprompt", (e) => {
       // Prevent the mini-infobar from appearing on mobile
       e.preventDefault();
       // Stash the event so it can be triggered later.
@@ -93,7 +88,7 @@ const Layout = (props: ILayout) => {
         localStorage["utm_term"] = Router.query.utm_term;
         localStorage["utm_content"] = Router.query.utm_content;
         localStorage["utm_landing_url"] = "https://otoli.net/join-us";
-      } else if(!localStorage["utm_source"]) {
+      } else if (!localStorage["utm_source"]) {
         localStorage["utm_source"] = "google";
         localStorage["utm_medium"] = "organic";
         localStorage["utm_landing_url"] = Router.router.asPath;
@@ -159,22 +154,22 @@ const Layout = (props: ILayout) => {
           context Providers wrap the Header and main section in the app to track data change in content   
       */}
       {showPwaBanner ? (
-        <section className="pwa_invitation_banner">
+        <section className='pwa_invitation_banner'>
           <div
-            className="pwa_content HEAP_PWA_INVITATION"
+            className='pwa_content HEAP_PWA_INVITATION'
             onClick={customPwaPrompt}
           >
-            <img src={logo} alt="pwa logo icon" />
+            <img src={logo} alt='pwa logo icon' />
             اپلیکیشن اتولی را نصب کنید.
           </div>
           <p
-            className="close_pwa_invitation"
+            className='close_pwa_invitation'
             onClick={() => {
               AnalyticsEvent("pwa", "install-banner", "closed");
               setShowPwaBanner(false);
             }}
           >
-            <IoIosClose color="#fff" size="2rem" />
+            <IoIosClose color='#fff' size='2rem' />
             بستن
           </p>
         </section>
