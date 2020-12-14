@@ -17,9 +17,10 @@ import "nouislider/distribute/nouislider.css";
 
 import filterContext from "../../../context/filter-context";
 
-const PriceSlider = (props) => {
+const PriceSlider = ({ initialValueMin, initialValueMax, price_range }) => {
   const [value, setValue] = useState([0, 10000000]);
   const FilterContext = useContext(filterContext);
+  const [range, setRange] = useState({ min: 0, max: 10000000 });
 
   /**
    *
@@ -40,10 +41,19 @@ const PriceSlider = (props) => {
   };
 
   useEffect(() => {
-    if (props.initialValueMin || props.initialValueMax) {
-      setValue([props.initialValueMin, props.initialValueMax]);
+    if (initialValueMin || initialValueMax) {
+      setValue([initialValueMin, initialValueMax]);
     }
-  }, [props.initialValueMin, props.initialValueMax]);
+  }, [initialValueMin, initialValueMax]);
+
+  useEffect(() => {
+    if (price_range) {
+      setRange({
+        min: price_range[0],
+        max: price_range[1],
+      });
+    }
+  }, [price_range]);
 
   return (
     <div className='price_filter'>
@@ -72,13 +82,16 @@ const PriceSlider = (props) => {
          * @range
          * set the default range value between 0 to 10.000.000
          */
-        range={{ min: 0, max: 10000000 }}
+        range={range}
         start={value}
         margin={100000}
         // Show the blue color between to handles
         connect
         direction={"rtl"}
-        onSlide={(i) => {
+        // onSlide={(i) => {
+        //   setValue([+i[0], +i[1]]);
+        // }}
+        onUpdate={(i) => {
           setValue([+i[0], +i[1]]);
         }}
         // after click, the function will be running

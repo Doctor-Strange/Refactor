@@ -1,13 +1,15 @@
 const UrlCreator = (data: Idata) => {
-  let query = "?";
+  let queryString = "?";
+  let temp_query = {};
   let asPath = null;
 
   for (const [key, value] of Object.entries(data.query)) {
     if (value == 0) {
       continue;
     }
-    if (query === "?") query += `${key}=${value}`;
-    else query += `&${key}=${value}`;
+    temp_query[key] = value;
+    if (queryString === "?") queryString += `${key}=${value}`;
+    else queryString += `&${key}=${value}`;
   }
   if (data.query.id) {
     asPath = data.route.replace(/\[id\]/gi, data.query.id);
@@ -15,9 +17,9 @@ const UrlCreator = (data: Idata) => {
 
   data.cb({
     pathname: data.route,
-    queryString: query,
+    queryString: queryString,
     asPath,
-    query: data.query,
+    query: temp_query,
   });
 };
 

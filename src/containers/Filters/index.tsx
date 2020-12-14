@@ -19,6 +19,8 @@ const Filters = ({
   show_filter_prop_reset,
   initialFilterValues,
   language,
+  hide_slider,
+  price_range,
 }: IFilter) => {
   const [deliver_at_renters_place, setDeliver_at_renters_place] = useState(0);
   const [with_driver, setwith_driver] = useState(0);
@@ -161,61 +163,51 @@ const Filters = ({
 
   useEffect(() => {
     if (initialFilterValues) {
-      if (initialFilterValues.query.min_price) {
-        setInitialValueMin(+initialFilterValues.query.min_price);
+      const {
+        body_style_id,
+        brand_id,
+        car_id,
+        deliver_at_renters_place,
+        end_date,
+        limit,
+        location_id,
+        max_price,
+        min_price,
+        o,
+        page,
+        start_date,
+        with_driver,
+      } = initialFilterValues;
+      if (min_price) {
+        setInitialValueMin(+min_price);
+      } else if (price_range) {
+        setInitialValueMin(price_range[0]);
       }
-      if (initialFilterValues.query.max_price) {
-        setInitialValueMax(+initialFilterValues.query.max_price);
+      if (max_price) {
+        setInitialValueMax(+max_price);
+      } else if (price_range) {
+        setInitialValueMax(price_range[1]);
       }
-      if (
-        initialFilterValues.query.deliver_at_renters_place &&
-        initialFilterValues.query.deliver_at_renters_place === "1"
-      ) {
-        setDeliver_at_renters_place(
-          +initialFilterValues.query.deliver_at_renters_place
-        );
+      if (deliver_at_renters_place) {
+        setDeliver_at_renters_place(+deliver_at_renters_place);
       }
-      if (
-        initialFilterValues.query.with_driver &&
-        initialFilterValues.query.with_driver === "1"
-      ) {
-        setwith_driver(+initialFilterValues.query.with_driver);
+      if (with_driver) {
+        setwith_driver(+with_driver);
       }
-      if (initialFilterValues.query.body_style_id) {
-        if (
-          initialFilterValues.query.body_style_id !== "" &&
-          initialFilterValues.query.body_style_id !== "all"
-        ) {
-          let convertStringToArray = initialFilterValues.query.body_style_id.split(
-            ","
-          );
-          let convertIndexToNumber = convertStringToArray.reduce((s, c) => {
-            return s.concat(+c);
-          }, []);
-          body_style_list = convertIndexToNumber;
-        }
-      }      
-      if (initialFilterValues.query.brand_id) {
-        if (
-          initialFilterValues.query.brand_id !== "" &&
-          initialFilterValues.query.brand_id !== "all"
-        ) {
-          setBrand_id_name(
-            initialFilterValues.query.brand_name.replace(/-/g, " ")
-          );
-          let brand_id = +initialFilterValues.query.brand_id;
-          setBrand_id(brand_id);
-          getModelList(brand_id);
-          if (initialFilterValues.query.car_id) {
-            if (
-              initialFilterValues.query.car_id !== "" &&
-              initialFilterValues.query.car_id !== "all"
-            ) {
-              setCar_id_name(
-                initialFilterValues.query.car_name.replace(/-/g, " ")
-              );
-            }
-          }
+      if (body_style_id) {
+        let convertStringToArray = body_style_id.split(",");
+        let convertIndexToNumber = convertStringToArray.reduce((s, c) => {
+          return s.concat(+c);
+        }, []);
+        body_style_list = convertIndexToNumber;
+      }
+      if (brand_id) {
+        // setBrand_id_name(brand_name.replace(/-/g, " "));
+        // let brand_id = +brand_id;
+        setBrand_id(brand_id);
+        getModelList(brand_id);
+        if (car_id) {
+          // setCar_id_name(car_name.replace(/-/g, " "));
         }
       }
     }
@@ -255,10 +247,11 @@ const Filters = ({
         </div>
         {hidePrice ? (
           <Spinner display='block' width={20} color='#737373' />
-        ) : (
+        ) : hide_slider ? null : (
           <PriceSlider
             initialValueMin={initialValueMin}
             initialValueMax={initialValueMax}
+            price_range={price_range}
           />
         )}
         <h3>{language.filter.filter_section_h3_1}</h3>
@@ -419,6 +412,8 @@ interface IFilter {
   show_filter_prop_reset: any;
   initialFilterValues: any;
   language: any;
+  price_range: any;
+  hide_slider: boolean;
 }
 
 export default Filters;

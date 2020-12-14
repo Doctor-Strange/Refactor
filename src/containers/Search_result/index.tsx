@@ -61,6 +61,9 @@ const Search_result = ({ language }: ISearch_result) => {
   const [result, setResult] = useState(null);
   const [extra_info, setExtra_info] = useState([]);
   const [total_count, setTotal_count] = useState(0);
+  const [price_range, setPrice_range] = useState(null);
+  const [hide_slider, setHide_slider] = useState(false);
+  const [search_params, setSearch_params] = useState(null);
   const [remained_count, setRemained_count] = useState(0);
   const [show_spinner_loadMore, setShow_spinner_loadMore] = useState(false);
   const [show_filter, setShow_filter] = useState(false);
@@ -109,7 +112,7 @@ const Search_result = ({ language }: ISearch_result) => {
     if (router.query.with_driver === "1") {
       filtersChecker.with_driver = true;
     }
-    with_driver = +url_checked.with_driver; 
+    with_driver = +url_checked.with_driver;
 
     if (
       url_checked.body_style_id !== "" &&
@@ -181,7 +184,7 @@ const Search_result = ({ language }: ISearch_result) => {
 
   async function initSearch() {
     JumpTo = jsCookie.get("JumpTo");
-
+    setPrice_range(null);
     // reset the data
     if (!loadMoreCar) {
       page = 1;
@@ -213,11 +216,22 @@ const Search_result = ({ language }: ISearch_result) => {
         category_id: filtersChecker.category_id ? category_id : null,
         page,
         limit,
-      });
+      }); 
       const res: any = await REQUEST_GET_SEARCH_FOR_RENT({
         searchQuery,
       });
+      setSearch_params(res.extra_info.params);
       setTotal_count(res.total_count);
+      if (
+        res.extra_info.avg_price_per_day_min !==
+        res.extra_info.avg_price_per_day_max
+      ) {
+        setPrice_range([
+          res.extra_info.avg_price_per_day_min,
+          res.extra_info.avg_price_per_day_max,
+        ]);
+        setHide_slider(false);
+      } else setHide_slider(true);
       setRemained_count(res.remained_count);
 
       setExtra_info(res.extra_info);
@@ -372,7 +386,7 @@ const Search_result = ({ language }: ISearch_result) => {
     }
   };
 
-  const UrlUpdater = (data) => {
+  const UrlUpdater = (data) => { 
     const { pathname, query } = data;
 
     router.push(
@@ -505,6 +519,10 @@ const Search_result = ({ language }: ISearch_result) => {
               });
               loadMoreCar = false;
               filtersChecker.price = false;
+              price = {
+                min: null,
+                max: null,
+              };
               staticRoute.min_price = 0;
               staticRoute.max_price = 0;
               UrlCreator({
@@ -652,8 +670,10 @@ const Search_result = ({ language }: ISearch_result) => {
             show_filter_prop_reset={() => {
               setShow_filter(false);
             }}
-            initialFilterValues={router}
+            initialFilterValues={search_params}
             language={language}
+            price_range={price_range}
+            hide_slider={hide_slider}
           />
         </filterContext.Provider>
         <SearchResultList
