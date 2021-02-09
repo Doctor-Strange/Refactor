@@ -18,6 +18,7 @@ import { IoIosClose } from "react-icons/io";
 import Spinner from "../Spinner";
 import Cropper from "react-easy-crop";
 import getCroppedImg from "../../../utils/cropImage";
+import Filter_license from "../../../utils/filter_license";
 import ZoomSlider from "./ZoomSlider";
 
 const ImageUploader = ({
@@ -32,6 +33,7 @@ const ImageUploader = ({
 
   const [currentImage, setCurrentImage] = useState(null);
   const [croptStart, setCroptStart] = useState(false);
+  const [covert_license, set_covert_license] = useState(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
@@ -111,9 +113,13 @@ const ImageUploader = ({
   }, []);
 
   const showCroppedImage = useCallback(async () => {
+    console.log(croppedAreaPixels);
+
+    console.log(window.innerWidth);
     try {
       const image = await getCroppedImg(currentImage, croppedAreaPixels, true);
-      sendTheImage(image, URL.createObjectURL(image));
+      set_covert_license(URL.createObjectURL(image));
+      // sendTheImage(image, URL.createObjectURL(image));
       setCroptStart(false);
     } catch (e) {
       console.error(e);
@@ -160,6 +166,12 @@ const ImageUploader = ({
           </div>
         </div>
       )}
+      {covert_license ? (
+        <Filter_license
+          imageSrc={covert_license}
+          pixelCrop={croppedAreaPixels}
+        />
+      ) : null}
       <div className='drop_zone' {...getRootProps()}>
         <input {...getInputProps()} multiple={false} />
         <p className='uploadText'>{language.text_3}</p>
