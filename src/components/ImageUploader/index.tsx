@@ -26,6 +26,7 @@ const ImageUploader = ({
   delete_image,
   default_image,
   error_status,
+  container_width,
   language,
 }: IImageUpload) => {
   const [picturesPreview, setPicturesPreview] = useState([]);
@@ -33,10 +34,13 @@ const ImageUploader = ({
 
   const [currentImage, setCurrentImage] = useState(null);
   const [croptStart, setCroptStart] = useState(false);
+  const [image_for_draw, set_image_for_draw] = useState(null);
   const [covert_license, set_covert_license] = useState(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+
+  const [filter, setfilter] = useState(false);
 
   const wrapperRef = useRef(null);
   const token = jsCookie.get("token");
@@ -119,6 +123,7 @@ const ImageUploader = ({
     try {
       const image = await getCroppedImg(currentImage, croppedAreaPixels, true);
       set_covert_license(URL.createObjectURL(image));
+      set_image_for_draw(image);
       // sendTheImage(image, URL.createObjectURL(image));
       setCroptStart(false);
     } catch (e) {
@@ -166,12 +171,17 @@ const ImageUploader = ({
           </div>
         </div>
       )}
-      {covert_license ? (
+      {/* {covert_license ? ( */}
+      {filter && (
         <Filter_license
+          // imageSrc={image_for_draw}
           imageSrc={covert_license}
           pixelCrop={croppedAreaPixels}
+          container_width={container_width}
         />
-      ) : null}
+      )}
+      <span onClick={() => setfilter(true)}>show</span>
+      {/* ) : null} */}
       <div className='drop_zone' {...getRootProps()}>
         <input {...getInputProps()} multiple={false} />
         <p className='uploadText'>{language.text_3}</p>
@@ -229,6 +239,7 @@ interface IImageUpload {
   default_image?: any;
   error_status?: boolean;
   language: any;
+  container_width: any;
 }
 
 export default ImageUploader;

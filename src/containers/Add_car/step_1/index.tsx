@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useReducer, useState } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+  useRef,
+} from "react";
 import { IoIosCar, IoIosArrowDown } from "react-icons/io";
 // import "./step_1.scss";
 import DropdownSearch from "../../../components/form/Dropdown";
@@ -535,6 +541,7 @@ const Add_Car_Step_1 = ({ language }: IAdd_Car_Step_1) => {
     min_days_to_rent: 1,
   });
   const user = useContext(context_user);
+  const main_container = useRef(null);
   const user_id = user.data?.id;
   const token = user.data?.token;
 
@@ -1200,7 +1207,7 @@ const Add_Car_Step_1 = ({ language }: IAdd_Car_Step_1) => {
   };
 
   return (
-    <article className='responsive add_car_form_container'>
+    <article className='responsive add_car_form_container' ref={main_container}>
       <form
         className='add_car_form_step_1'
         onSubmit={(e) => submitHandler(e, state)}
@@ -1788,6 +1795,7 @@ const Add_Car_Step_1 = ({ language }: IAdd_Car_Step_1) => {
             });
           }}
           language={language.imageuploader}
+          container_width={main_container}
         />
         <label>
           {language.car_description_lable}
