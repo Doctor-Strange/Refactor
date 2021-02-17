@@ -1,10 +1,75 @@
-// .container_size {
-//   position: fixed;
-//   left: 0;
-//   right: 0;
-//   top: 0;
-//   margin: auto;
-//   canvas {
-//     z-index: 99999999999999;
-//   }
-// }
+@import "../src/styles/colors";
+
+.container_size {
+  .zoom_slider {
+    position: static;
+    display: block;
+    width: 50%;
+    margin: auto;
+    .price_text {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      .TA {
+        font-weight: 500;
+      }
+      p {
+        font-weight: 100;
+      }
+    }
+    .zoom_plus_icon {
+      display: inline-block;
+      vertical-align: middle;
+      margin: 0 0 0 2rem;
+    }
+    .zoom_out_icon {
+      display: inline-block;
+      vertical-align: middle;
+      margin: 0 2rem 0 0;
+    }
+    .noUi-target {
+      border: none;
+      background: $lighter_grey;
+      box-shadow: none;
+      height: 5px;
+      margin: 1rem 0;
+      display: inline-block;
+      width: 76%;
+      .noUi-origin {
+        left: -10px !important;
+        .noUi-handle {
+          border: 3px solid $blue;
+          background-color: #fff;
+          box-shadow: none;
+          border-radius: 50%;
+          width: 24px;
+          height: 24px;
+          top: -10px;
+          left: 0px;
+          right: auto;
+          &:focus {
+            outline: none;
+          }
+          &::after,
+          &::before {
+            display: none;
+          }
+        }
+      }
+      .noUi-connect {
+        background: $blue;
+      }
+      .noUi-base,
+      .noUi-connects {
+        height: 5px;
+      }
+    }
+  }
+  @media screen and(max-width:720px) {
+    .zoom_slider {
+      bottom: 15%;
+      width: 84%;
+    }
+  }
+}

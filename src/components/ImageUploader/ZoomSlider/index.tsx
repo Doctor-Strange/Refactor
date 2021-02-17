@@ -16,7 +16,14 @@ import "./ZoomSlider.scss";
 import "nouislider/distribute/nouislider.css";
 import { IoMdAdd, IoMdRemove } from "react-icons/io";
 
-const ZoomSlider = ({ zoomChange, zoom }: IPriceSlider) => {
+const ZoomSlider = ({
+  zoomChange,
+  rotation,
+  zoom,
+  min,
+  max,
+  step,
+}: IPriceSlider) => {
   /**
    *
    * @param value
@@ -63,10 +70,11 @@ const ZoomSlider = ({ zoomChange, zoom }: IPriceSlider) => {
          * @range
          * set the default range value between 0 to 10.000.000
          */
-        range={{ min: 1, max: 3 }}
+        range={{ min: min, max: max }}
         start={zoom}
         onSlide={(zoom) => zoomChange(zoom)}
-        step={0.1}
+        onEnd={(zoom) => rotation(zoom)}
+        step={step}
       />
       <IoMdRemove size='2.2rem' color='#fff' className='zoom_out_icon' />
     </div>
@@ -74,8 +82,12 @@ const ZoomSlider = ({ zoomChange, zoom }: IPriceSlider) => {
 };
 
 interface IPriceSlider {
-  zoomChange: any;
+  zoomChange?: any;
+  rotation?: any;
   zoom: number;
+  min: number;
+  max: number;
+  step: number;
 }
 
 export default ZoomSlider;

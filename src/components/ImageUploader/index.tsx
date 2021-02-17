@@ -21,6 +21,8 @@ import getCroppedImg from "../../../utils/cropImage";
 import Filter_license from "../../../utils/filter_license";
 import ZoomSlider from "./ZoomSlider";
 
+import ImageEditor from "../../../utils/UI_image_editor";
+
 const ImageUploader = ({
   Upload_image,
   delete_image,
@@ -150,7 +152,13 @@ const ImageUploader = ({
             onZoomChange={setZoom}
             cropShape='rect'
           />
-          <ZoomSlider zoomChange={setZoom} zoom={zoom} />
+          <ZoomSlider
+            zoomChange={setZoom}
+            zoom={zoom}
+            min={1}
+            max={3}
+            step={0.1}
+          />
           <div className='Crop_BTN_container'>
             <span className='Blue_BTN local_class' onClick={showCroppedImage}>
               تایید
@@ -172,6 +180,7 @@ const ImageUploader = ({
         </div>
       )}
       {/* {covert_license ? ( */}
+      {filter && <ImageEditor />}
       {filter && (
         <Filter_license
           // imageSrc={image_for_draw}
