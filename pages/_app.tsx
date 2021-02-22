@@ -164,10 +164,12 @@ class App_Otoli extends App {
 
   zoho_authentication = () => {
     axios
-      .post("https://www.zohoapis.com/crm/v2/users", {
-        grant_type: "authorization_code",
-        client_secret: "dacfaa734958a446d4a3ce397302f17514a82f4751",
-        client_id: "1000.FAV3S4FGRV8VCYZKBSRA66Q6FVHQ0H",
+      .post("https://accounts.zoho.eu/oauth/v2/auth", {
+        response_type: "code",
+        client_id: "1000.CSYJO7HW1C5OMJJR7S359SR2VRX6ZD",
+        redirect_url: "http://localhost:3000/",
+        // client_secret: "c3ca35f8c2f792f7abe96a363bba735b9fc76a8eae",
+        cope: "ZohoBooks.fullaccess.all",
       })
       .then((res) => {
         console.log(res);
