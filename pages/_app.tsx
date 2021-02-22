@@ -13,6 +13,7 @@ import jsCookie from "js-cookie";
 import user_context from "../src/context/User_info";
 import logo from "../public/android-icon-48x48.png";
 import { IoIosClose } from "react-icons/io";
+import axios from "axios";
 
 Sentry.init({
   dsn: process.env.SENTRY,
@@ -157,6 +158,23 @@ class App_Otoli extends App {
       }
       return false;
     });
+
+    this.zoho_authentication();
+  };
+
+  zoho_authentication = () => {
+    axios
+      .post("https://www.zohoapis.com/crm/v2/users", {
+        grant_type: "authorization_code",
+        client_secret: "dacfaa734958a446d4a3ce397302f17514a82f4751",
+        client_id: "1000.FAV3S4FGRV8VCYZKBSRA66Q6FVHQ0H",
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   AnalyticsEvent = (eventCategory, eventAction, eventLabel) => {
