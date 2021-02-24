@@ -22,7 +22,7 @@ const Landing_Page_Content = ({ data, language }: ILanding_Page_Content) => {
         <meta itemProp='ratingValue' content='4.4' />
       </div>
       <div itemProp='offers' itemType='http://schema.org/Offer' itemScope>
-        <link itemProp='url' href='https://example.com/anvil' />
+        <link itemProp='url' href={data.canonical_url} />
         <meta itemProp='availability' content='https://schema.org/InStock' />
         <meta itemProp='priceCurrency' content='IRR' />
         <meta
