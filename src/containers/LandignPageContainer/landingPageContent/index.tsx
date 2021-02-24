@@ -21,6 +21,18 @@ const Landing_Page_Content = ({ data, language }: ILanding_Page_Content) => {
         <meta itemProp='reviewCount' content='89' />
         <meta itemProp='ratingValue' content='4.4' />
       </div>
+      <div itemProp='offers' itemType='http://schema.org/Offer' itemScope>
+        <link itemProp='url' href='https://example.com/anvil' />
+        <meta itemProp='availability' content='https://schema.org/InStock' />
+        <meta itemProp='priceCurrency' content='IRR' />
+        <meta
+          itemProp='itemCondition'
+          content='https://schema.org/UsedCondition'
+        />
+        <meta itemProp='price' content='20000000' />
+        <meta itemProp='priceValidUntil' content='2021-11-20' />
+      </div>
+      <meta itemProp='sku' content={data.id} />
       <div itemProp='review' itemType='http://schema.org/Review' itemScope>
         <div itemProp='author' itemType='http://schema.org/Person' itemScope>
           <meta itemProp='name' content={data.title} />
