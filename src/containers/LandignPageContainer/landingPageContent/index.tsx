@@ -4,7 +4,36 @@ import Link from "next/link";
 
 const Landing_Page_Content = ({ data, language }: ILanding_Page_Content) => {
   return (
-    <article className='responsive landing_dynamic_content'>
+    <article
+      className='responsive landing_dynamic_content'
+      itemType='http://schema.org/Product'
+      itemScope
+    >
+      <meta itemProp='mpn' content={data.id} />
+      <meta itemProp='name' content={data.title} />
+      <link itemProp='image' href={data.image_url} />
+      <meta itemProp='description' content={data.meta_description} />
+      <div
+        itemProp='aggregateRating'
+        itemType='http://schema.org/AggregateRating'
+        itemScope
+      >
+        <meta itemProp='reviewCount' content='89' />
+        <meta itemProp='ratingValue' content='4.4' />
+      </div>
+      <div itemProp='review' itemType='http://schema.org/Review' itemScope>
+        <div itemProp='author' itemType='http://schema.org/Person' itemScope>
+          <meta itemProp='name' content={data.title} />
+        </div>
+        <div
+          itemProp='reviewRating'
+          itemType='http://schema.org/Rating'
+          itemScope
+        >
+          <meta itemProp='ratingValue' content='4' />
+          <meta itemProp='bestRating' content='5' />
+        </div>
+      </div>
       <section
         className='Landing_content'
         dangerouslySetInnerHTML={{ __html: `${data.content}` }}
