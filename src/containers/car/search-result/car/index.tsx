@@ -20,6 +20,7 @@ const Car = ({ data, showLocation, tagClick, language }: ICar) => {
     avg_discounted_price_per_day_name,
     avg_discounted_price_per_day,
     deliver_at_renters_place,
+    cancellation_policy,
     with_driver,
     is_promoted,
     has_media,
@@ -63,7 +64,11 @@ const Car = ({ data, showLocation, tagClick, language }: ICar) => {
       setH3Width(twoThirdsOfTheContainerWidth);
   }, []);
   return (
-    <div className='carCart HEAP_SearchResult_Card_Car' ref={cardRef}>
+    <div
+      className='carCart HEAP_SearchResult_Card_Car'
+      ref={cardRef}
+      data-typeof='schema:Product'
+    >
       <Link
         href={{
           pathname: "/car/[id]",
@@ -82,6 +87,8 @@ const Car = ({ data, showLocation, tagClick, language }: ICar) => {
               style={{
                 backgroundImage: `url(${img})`,
               }}
+              data-rel='schema:image'
+              data-resource={img}
             >
               {total_discount_percent > 0 && (
                 <span className='discount_badge'>
@@ -122,13 +129,15 @@ const Car = ({ data, showLocation, tagClick, language }: ICar) => {
                 <span>{language.search_result_section.car.show_details}</span>
               </div>
             </figure>
-            <div className='info_box'>
-              <div className='car_brand'>
+            <div className='info_box' data-rel='schema:brand'>
+              <div className='car_brand' typeof='schema:Brand'>
                 <h3
                   ref={h3Ref}
                   style={{
                     width: h3Width ? h3Width : "auto",
                   }}
+                  data-property='schema:name'
+                  data-content={title}
                 >
                   {title}
                 </h3>
@@ -138,7 +147,11 @@ const Car = ({ data, showLocation, tagClick, language }: ICar) => {
                 <p className='Price_number'>{price}</p>
                 <p>{`${unit}${language.search_result_section.car.toman_per_day}`}</p>
               </div>
-              <ul className='tags_container'>
+              <ul
+                className='tags_container'
+                data-property='schema:description'
+                data-content={cancellation_policy}
+              >
                 {deliver_at_renters_place && (
                   <li>
                     <span className='tags'>
