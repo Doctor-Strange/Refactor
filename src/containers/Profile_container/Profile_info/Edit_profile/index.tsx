@@ -16,7 +16,7 @@ import Router from "next/router";
 import TextInput from "../../../../components/form/TextInput";
 // import "./edit_profile.scss";
 import Button from "../../../../components/form/Button";
-// import jsCookie from "js-cookie";
+import jsCookie from "js-cookie";
 import context_user from "../../../../context/User_info";
 import Cropper from "react-easy-crop";
 import getCroppedImg from "../../../../../utils/cropImage";
@@ -138,7 +138,7 @@ const Edit_profile = ({
     if (triggerUpload) {
       if (
         data.thumbnail_url ===
-        "https://core.otoli.net/static/core/default_profile_pic.png"
+        "https://core.sepris.com/static/core/default_profile_pic.png"
       ) {
         file_input.current.click();
       }
@@ -148,7 +148,7 @@ const Edit_profile = ({
   const EditFormSubmit = async (e) => {
     e.preventDefault();
     const userReplica = { ...user.data };
-    const token = user.data.token;
+    const token = jsCookie.get("token");
     ResetError();
     setLoading(true);
     if (!state.first_name || !state.last_name) {
@@ -169,24 +169,24 @@ const Edit_profile = ({
       setLoading(false);
       return;
     }
-    if (!state.username && privateLink) {
-      dispatchError({
-        type: "username",
-        username: true,
-        message: language.user_name_error,
-      });
-      setLoading(false);
-      return;
-    }
-    if (!state.company_name && showCompany) {
-      dispatchError({
-        type: "company_name",
-        company_name: true,
-        message: language.company_name_error,
-      });
-      setLoading(false);
-      return;
-    }
+    // if (!state.username && privateLink) {
+    //   dispatchError({
+    //     type: "username",
+    //     username: true,
+    //     message: language.user_name_error,
+    //   });
+    //   setLoading(false);
+    //   return;
+    // }
+    // if (!state.company_name && showCompany) {
+    //   dispatchError({
+    //     type: "company_name",
+    //     company_name: true,
+    //     message: language.company_name_error,
+    //   });
+    //   setLoading(false);
+    //   return;
+    // }
 
     if (newImage) {
       try {
@@ -244,11 +244,7 @@ const Edit_profile = ({
     }
 
     try {
-      if (
-        showCompany &&
-        state.company_name !== "" &&
-        state.company_name !== userReplica.company_name
-      ) {
+      if (showCompany && state.company_name !== userReplica.company_name) {
         const res: any = await REQUEST_SET_COMPANY_NAME({
           token: userReplica.token,
           company_name: state.company_name,
@@ -285,7 +281,7 @@ const Edit_profile = ({
         src={
           state.image
             ? state.image
-            : "https://core.otoli.net/static/core/default_profile_pic.png"
+            : "https://core.sepris.com/static/core/default_profile_pic.png"
         }
         alt={state.first_name}
       />
