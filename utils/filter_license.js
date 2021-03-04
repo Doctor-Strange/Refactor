@@ -26,6 +26,10 @@ let radius = 10;
 let temp_x = null;
 let temp_y = null;
 
+let e_angle = 0;
+
+let scale_rate = 2;
+
 const createImage = (url) =>
   new Promise((resolve, reject) => {
     const image = new Image();
@@ -71,6 +75,7 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
   };
 
   const draw_the_image = () => {
+    e_ctx.save();
     e_ctx.drawImage(
       image_replica,
       0,
@@ -84,32 +89,10 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
     );
   };
 
-  // const whiteboard = async () => {
-  //   const canvas = canvasRef.current;
-  //   const ctx = canvas.getContext("2d");
-  //   ctx.fillStyle = "rgba(0,0,0,0)";
-  //   ctx.clearRect(0, 0, naturalWidth, naturalHeight);
-  //   canvas.style.backgroundImage = `url(${imageSrc})`;
-  //   canvas.style.backgroundSize = "cover";
-
-  //   // ctx.drawImage(
-  //   //   image,
-  //   //   pixelCrop.x,
-  //   //   pixelCrop.y,
-  //   //   pixelCrop.width,
-  //   //   pixelCrop.height,
-  //   //   0,
-  //   //   0,
-  //   //   canvas.width,
-  //   //   canvas.height
-  //   // );
-  // };
-
   function mouseDown(e) {
     e.persist();
     let cx = e.pageX - canvasRef.current.offsetLeft;
     let cy = e.pageY - canvasRef.current.offsetTop;
-
     if (!box) {
       draw_a_rectangle_at_center();
     } else {
@@ -119,41 +102,97 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
         cy >= box.y &&
         cy <= box.y + box.h
       ) {
-        drag_to_move_rectangle = true;
         console.log("inside");
-      }
-      // resize corner
-      // {
-      //   console.log(box.x, e.pageX - canvasRef.current.offsetLeft - box.x);
-      // box.w = e.pageX - canvasRef.current.offsetLeft - box.x;
-      // box.h = e.pageY - canvasRef.current.offsetTop - box.y;
-      // // box.y = e.pageY - canvasRef.current.offsetTop - box.y;
-      // // clear the canvas before drawing
-      // e_ctx.clearRect(0, 0, e_canvas.width, e_canvas.height);
-
-      // // draw the background of the image
-      // draw_the_image();
-
-      // draw(box);
-      // }
-      else {
+        drag_to_move_rectangle = true;
+      } else if (
+        cx >= box.x - 32 &&
+        cx <= box.x &&
+        cy >= box.y + box.h / 2 - 20 &&
+        cy <= box.y + box.h / 2 + 20
+      ) {
+        drag_to_add_width = true;
+      } else if (
+        cx >= box.x + box.w / 2 - 20 &&
+        cx <= box.x + box.w / 2 + 20 &&
+        cy >= box.y + box.h &&
+        cy <= box.y + box.h + 30
+      ) {
+        drag_to_add_height = true;
+      } else if (
+        cx >= box.x + box.w &&
+        cx <= box.x + box.w + 30 &&
+        cy >= box.y + box.h &&
+        cy <= box.y + box.h + 30
+      ) {
+        drag_to_scale = true;
+      } else if (
+        cx >= box.x + box.w &&
+        cx <= box.x + box.w + 30 &&
+        cy >= box.y - 30 &&
+        cy <= box.y
+      ) {
+        console.log("top");
+        drag_to_rotate = true;
+      } else {
         console.log("outside");
       }
     }
   }
-  // rect.startX = e.pageX - canvasRef.current.offsetLeft;
-  // rect.startY = e.pageY - canvasRef.current.offsetTop;
-
-  // R_rect.startX = (e.pageX - canvasRef.current.offsetLeft) * ratio;
-  // R_rect.startY = (e.pageY - canvasRef.current.offsetTop) * ratio;
 
   function mouseMove(e) {
+    let cx = e.pageX - canvasRef.current.offsetLeft;
+    let cy = e.pageY - canvasRef.current.offsetTop;
+    // console.log(cx, cy);
+    // move
     if (drag_to_move_rectangle) {
-      console.log(box.x, e.pageX - canvasRef.current.offsetLeft - box.x);
-      box.x = e.pageX - canvasRef.current.offsetLeft - box.w / 2;
-      box.y = e.pageY - canvasRef.current.offsetTop - box.h / 2;
-      // box.y = e.pageY - canvasRef.current.offsetTop - box.y;
+      box.x = cx - box.w / 2;
+      box.y = cy - box.h / 2;
       // clear the canvas before drawing
+      e_ctx.clearRect(0, 0, e_canvas.width, e_canvas.height);
+      // draw the background of the image
+      draw_the_image();
+      draw(box);
+    }
+    // width
+    else if (drag_to_add_width) {
+      if (temp_x > cx) {
+        box.x = box.x - scale_rate;
+        box.w = box.w + scale_rate;
+      } else if (temp_x < cx && box.w > 50) {
+        box.x = box.x + scale_rate;
+        box.w = box.w - scale_rate;
+      }
+      // clear the canvas before drawing
+      e_ctx.clearRect(0, 0, e_canvas.width, e_canvas.height);
+      // draw the background of the image
+      draw_the_image();
+      draw(box);
+    }
+    // height
+    else if (drag_to_add_height) {
+      if (temp_y < cy) {
+        box.y = box.y;
+        box.h = box.h + scale_rate;
+      } else if (temp_y > cy && box.h > 50) {
+        box.y = box.y;
+        box.h = box.h - scale_rate;
+      }
+      // clear the canvas before drawing
+      e_ctx.clearRect(0, 0, e_canvas.width, e_canvas.height);
+      // draw the background of the image
+      draw_the_image();
+      draw(box);
+    }
+    // scale
+    else if (drag_to_scale) {
+      if (temp_x > cx && box.w > 40 && box.h > 40) {
+        box.w = box.w - scale_rate;
+        box.h = box.h - scale_rate;
+      } else if (temp_x < cx) {
+        box.w = box.w + scale_rate;
+        box.h = box.h + scale_rate;
+      }
+      // // clear the canvas before drawing
       e_ctx.clearRect(0, 0, e_canvas.width, e_canvas.height);
 
       // draw the background of the image
@@ -161,12 +200,60 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
 
       draw(box);
     }
+    // rotate
+    else if (drag_to_rotate) {
+      let center_x = box.x + box.w / 2;
+      let center_y = box.y + box.h / 2;
+      if (temp_x < cx) {
+        e_angle = e_angle + 1;
+      } else if (temp_x > cx) {
+        e_angle = e_angle - 1;
+      }
+      // // clear the canvas before drawing
+      e_ctx.clearRect(0, 0, e_canvas.width, e_canvas.height);
+      // draw the background of the image
+      draw_the_image();
+      console.log(e_angle);
+      draw(box, {
+        tx: center_x,
+        ty: center_y,
+        angle: e_angle,
+      });
+    }
     //drawOldShapes();
+    temp_x = cx;
+    temp_y = cy;
   }
 
   function mouseUp() {
     if (drag_to_move_rectangle) {
       drag_to_move_rectangle = false;
+      temp_x = null;
+      temp_y = null;
+      return;
+    }
+    if (drag_to_add_width) {
+      drag_to_add_width = false;
+      temp_x = null;
+      temp_y = null;
+      return;
+    }
+    if (drag_to_add_height) {
+      drag_to_add_height = false;
+      temp_x = null;
+      temp_y = null;
+      return;
+    }
+    if (drag_to_scale) {
+      drag_to_scale = false;
+      temp_x = null;
+      temp_y = null;
+      return;
+    }
+    if (drag_to_rotate) {
+      drag_to_rotate = false;
+      temp_x = null;
+      temp_y = null;
       return;
     }
     // rectStartXArray[rectStartXArray.length] = rect.startX;
@@ -182,59 +269,67 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
     // drag_to_move_rectangle = false;
   }
 
-  // const rotation_handler = async (e) => {
-  //   let value = Number(e);
-  //   console.log(e);
-  //   // g_ctx.clearRect(rect.startX, rect.startY, rect.w, rect.h);
-  //   //
-  //   // console.log(rect.w, rect.h);
-  //   // console.log(R_rect.w, R_rect.h);
+  function draw(point, rotation = null) {
+    e_ctx.save();
+    e_ctx.beginPath();
+    e_ctx.fillStyle = "red";
+    if (rotation) {
+      e_ctx.translate(rotation.tx, rotation.ty);
+      e_ctx.rotate((rotation.angle * Math.PI) / 180);
+      e_ctx.translate(-rotation.tx, -rotation.ty);
+    }
+    e_ctx.fillRect(box.x + box.w, box.y - 30, 30, 30);
+    e_ctx.restore();
 
-  //   // g_ctx.beginPath();
-  //   // g_ctx.fillStyle = "#FF0000";
-  //   await whiteboard();
-  //   g_ctx.translate(rect.startX + rect.w / 2, rect.startY + rect.h / 2);
-  //   g_ctx.clearRect(rect.startX, rect.startY, rect.w, rect.h);
-  //   R_g_ctx.translate(
-  //     R_rect.startX + R_rect.w / 2,
-  //     R_rect.startY + R_rect.h / 2
-  //   );
-  //   g_ctx.rotate((value * Math.PI) / 180);
-  //   R_g_ctx.rotate((value * Math.PI) / 180);
-  //   g_ctx.translate(-(rect.startX + rect.w / 2), -(rect.startY + rect.h / 2));
-  //   R_g_ctx.translate(
-  //     -(R_rect.startX + R_rect.w / 2),
-  //     -(R_rect.startY + R_rect.h / 2)
-  //   );
-  //   g_ctx.fillStyle = "#FF0000";
-  //   R_g_ctx.fillStyle = "#FF0000";
-  //   g_ctx.fillRect(rect.startX, rect.startY, rect.w, rect.h);
-  //   R_g_ctx.fillRect(R_rect.startX, R_rect.startY, R_rect.w, R_rect.h);
-  // };
-
-  function draw(point) {
     // draw the rectangle
+    e_ctx.save();
     e_ctx.beginPath();
     e_ctx.fillStyle = "#FFFFFF";
+    if (rotation) {
+      e_ctx.translate(rotation.tx, rotation.ty);
+      e_ctx.rotate((rotation.angle * Math.PI) / 180);
+      e_ctx.translate(-rotation.tx, -rotation.ty);
+    }
     e_ctx.fillRect(point.x, point.y, point.w, point.h);
+    e_ctx.restore();
 
     // draw the border container
+    e_ctx.save();
     e_ctx.beginPath();
+    if (rotation) {
+      e_ctx.translate(rotation.tx, rotation.ty);
+      e_ctx.rotate((rotation.angle * Math.PI) / 180);
+      e_ctx.translate(-rotation.tx, -rotation.ty);
+    }
     e_ctx.strokeStyle = "#585858";
     e_ctx.strokeRect(point.x - 12, point.y - 12, point.w + 24, point.h + 24);
+    e_ctx.restore();
 
     // draw the the left handle
+    e_ctx.save();
     e_ctx.beginPath();
     e_ctx.fillStyle = "#FFFFFF";
+    if (rotation) {
+      e_ctx.translate(rotation.tx, rotation.ty);
+      e_ctx.rotate((rotation.angle * Math.PI) / 180);
+      e_ctx.translate(-rotation.tx, -rotation.ty);
+    }
     e_ctx.arc(point.x - 12, point.y + point.h / 2, radius, 0, 2 * Math.PI);
     e_ctx.fill();
     e_ctx.lineWidth = 1;
     e_ctx.strokeStyle = "#585858";
     e_ctx.stroke();
+    e_ctx.restore();
 
     // draw the the corner handle
+    e_ctx.save();
     e_ctx.beginPath();
     e_ctx.fillStyle = "#FFFFFF";
+    if (rotation) {
+      e_ctx.translate(rotation.tx, rotation.ty);
+      e_ctx.rotate((rotation.angle * Math.PI) / 180);
+      e_ctx.translate(-rotation.tx, -rotation.ty);
+    }
     e_ctx.arc(
       point.x + point.w + 12,
       point.y + point.h + 12,
@@ -246,10 +341,33 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
     e_ctx.lineWidth = 1;
     e_ctx.strokeStyle = "#585858";
     e_ctx.stroke();
+    e_ctx.restore();
 
-    // draw the the bottom handle
+    // draw the the top right corner handle
+    e_ctx.save();
     e_ctx.beginPath();
     e_ctx.fillStyle = "#FFFFFF";
+    if (rotation) {
+      e_ctx.translate(rotation.tx, rotation.ty);
+      e_ctx.rotate((rotation.angle * Math.PI) / 180);
+      e_ctx.translate(-rotation.tx, -rotation.ty);
+    }
+    e_ctx.arc(point.x + point.w + 12, point.y - 12, radius, 0, 2 * Math.PI);
+    e_ctx.fill();
+    e_ctx.lineWidth = 1;
+    e_ctx.strokeStyle = "#585858";
+    e_ctx.stroke();
+    e_ctx.restore();
+
+    // draw the the bottom handle
+    e_ctx.save();
+    e_ctx.beginPath();
+    e_ctx.fillStyle = "#FFFFFF";
+    if (rotation) {
+      e_ctx.translate(rotation.tx, rotation.ty);
+      e_ctx.rotate((rotation.angle * Math.PI) / 180);
+      e_ctx.translate(-rotation.tx, -rotation.ty);
+    }
     e_ctx.arc(
       point.x + point.w / 2,
       point.y + point.h + 12,
@@ -261,6 +379,7 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
     e_ctx.lineWidth = 1;
     e_ctx.strokeStyle = "#585858";
     e_ctx.stroke();
+    e_ctx.restore();
   }
 
   const draw_a_rectangle_at_center = async () => {
@@ -268,7 +387,7 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
     let width = e_canvas.width / 4;
     let center_x = e_canvas.width / 2 - width / 2;
     let center_y = e_canvas.height / 2 - width / 4;
-
+    e_angle = 0;
     // clear the canvas before drawing
     e_ctx.clearRect(0, 0, e_canvas.width, e_canvas.height);
 
@@ -293,7 +412,6 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
 
   return (
     <div className='container_size'>
-      {/* {console.log(rotation)} */}
       <canvas
         ref={canvasRef}
         onMouseDown={mouseDown}
