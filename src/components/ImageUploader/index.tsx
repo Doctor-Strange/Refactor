@@ -21,7 +21,7 @@ import getCroppedImg from "../../../utils/cropImage";
 import Filter_license from "../../../utils/filter_license";
 import ZoomSlider from "./ZoomSlider";
 
-import ImageEditor from "../../../utils/UI_image_editor";
+import parking from "../../../public/image/test.jpg";
 
 const ImageUploader = ({
   Upload_image,
@@ -180,15 +180,15 @@ const ImageUploader = ({
         </div>
       )}
       {/* {covert_license ? ( */}
-      {filter && <ImageEditor />}
-      {filter && (
-        <Filter_license
-          // imageSrc={image_for_draw}
-          imageSrc={covert_license}
-          pixelCrop={croppedAreaPixels}
-          container_width={container_width}
-        />
-      )}
+      {/* {filter && <ImageEditor />} */}
+      {/* {filter && ( */}
+      <Filter_license
+        // imageSrc={image_for_draw}
+        imageSrc={parking}
+        pixelCrop={croppedAreaPixels}
+        container_width={container_width}
+      />
+      {/* )} */}
       <span onClick={() => setfilter(true)}>show</span>
       {/* ) : null} */}
       <div className='drop_zone' {...getRootProps()}>
