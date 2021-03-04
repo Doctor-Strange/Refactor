@@ -26,7 +26,7 @@ let radius = 10;
 let temp_x = null;
 let temp_y = null;
 
-let e_angle = 0;
+let e_angle = 1;
 
 let scale_rate = 2;
 
@@ -90,6 +90,7 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
   };
 
   function mouseDown(e) {
+    console.log((e_angle * Math.PI) / 180);
     e.persist();
     let cx = e.pageX - canvasRef.current.offsetLeft;
     let cy = e.pageY - canvasRef.current.offsetTop;
@@ -128,7 +129,7 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
       } else if (
         cx >= box.x + box.w &&
         cx <= box.x + box.w + 30 &&
-        cy >= box.y - 30 &&
+        cy >= box.y + -30 &&
         cy <= box.y
       ) {
         console.log("top");
@@ -204,9 +205,9 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
     else if (drag_to_rotate) {
       let center_x = box.x + box.w / 2;
       let center_y = box.y + box.h / 2;
-      if (temp_x < cx) {
+      if (temp_y < cy) {
         e_angle = e_angle + 1;
-      } else if (temp_x > cx) {
+      } else if (temp_y > cy) {
         e_angle = e_angle - 1;
       }
       // // clear the canvas before drawing
@@ -278,6 +279,7 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
       e_ctx.rotate((rotation.angle * Math.PI) / 180);
       e_ctx.translate(-rotation.tx, -rotation.ty);
     }
+    // e_ctx.fillRect(box.x + box.w + e_angle, box.y + e_angle - 30, 30, 30);
     e_ctx.fillRect(box.x + box.w, box.y - 30, 30, 30);
     e_ctx.restore();
 
@@ -387,7 +389,7 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
     let width = e_canvas.width / 4;
     let center_x = e_canvas.width / 2 - width / 2;
     let center_y = e_canvas.height / 2 - width / 4;
-    e_angle = 0;
+    e_angle = 1;
     // clear the canvas before drawing
     e_ctx.clearRect(0, 0, e_canvas.width, e_canvas.height);
 
