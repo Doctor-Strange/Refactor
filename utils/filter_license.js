@@ -30,6 +30,8 @@ let e_angle = 1;
 
 let scale_rate = 2;
 
+let deactivate_scroll = false;
+
 const createImage = (url) =>
   new Promise((resolve, reject) => {
     const image = new Image();
@@ -74,6 +76,30 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
     draw_the_image();
   };
 
+  const scroll_deactivater = (event, event_name) => {
+    console.log("22");
+    let supportsPassive = false;
+    try {
+      window.addEventListener(
+        "test",
+        null,
+        Object.defineProperty({}, "passive", {
+          get: function() {
+            supportsPassive = true;
+          },
+        })
+      );
+    } catch (e) {}
+    let wheelOpt = supportsPassive ? { passive: false } : false;
+    window.addEventListener(
+      "touchmove",
+      () => {
+        event.preventDefault();
+      },
+      wheelOpt
+    ); // mobile
+  };
+
   const draw_the_image = () => {
     e_ctx.save();
     e_ctx.drawImage(
@@ -87,13 +113,20 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
       e_canvas.width,
       e_canvas.height
     );
+    e_ctx.restore();
   };
 
-  function mouseDown(e) {
-    console.log((e_angle * Math.PI) / 180);
+  function mouseDown(e, touch) {
     e.persist();
     let cx = e.pageX - canvasRef.current.offsetLeft;
     let cy = e.pageY - canvasRef.current.offsetTop;
+    if (touch) {
+      // if (!deactivate_scroll) {
+      // scroll_deactivater(e, "touchdown");
+      // }
+      cx = e.touches[0].pageX - canvasRef.current.offsetLeft;
+      cy = e.touches[0].pageY - canvasRef.current.offsetTop;
+    }
     if (!box) {
       draw_a_rectangle_at_center();
     } else {
@@ -140,9 +173,19 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
     }
   }
 
-  function mouseMove(e) {
+  function mouseMove(e, touch = false) {
+    e.persist();
     let cx = e.pageX - canvasRef.current.offsetLeft;
     let cy = e.pageY - canvasRef.current.offsetTop;
+    if (touch) {
+      document.getElementsByTagName("html")[0].style.overflowY = "";
+      // if (!deactivate_scroll) {
+      scroll_deactivater(e);
+      // deactivate_scroll = true;
+      // }
+      cx = e.touches[0].pageX - canvasRef.current.offsetLeft;
+      cy = e.touches[0].pageY - canvasRef.current.offsetTop;
+    }
     // console.log(cx, cy);
     // move
     if (drag_to_move_rectangle) {
@@ -206,15 +249,14 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
       let center_x = box.x + box.w / 2;
       let center_y = box.y + box.h / 2;
       if (temp_y < cy) {
-        e_angle = e_angle + 1;
+        e_angle = e_angle + scale_rate;
       } else if (temp_y > cy) {
-        e_angle = e_angle - 1;
+        e_angle = e_angle - scale_rate;
       }
       // // clear the canvas before drawing
       e_ctx.clearRect(0, 0, e_canvas.width, e_canvas.height);
       // draw the background of the image
       draw_the_image();
-      console.log(e_angle);
       draw(box, {
         tx: center_x,
         ty: center_y,
@@ -226,7 +268,9 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
     temp_y = cy;
   }
 
-  function mouseUp() {
+  function mouseUp(e) {
+    e.preventDefault();
+    console.log("up or cancel");
     if (drag_to_move_rectangle) {
       drag_to_move_rectangle = false;
       temp_x = null;
@@ -279,7 +323,6 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
       e_ctx.rotate((rotation.angle * Math.PI) / 180);
       e_ctx.translate(-rotation.tx, -rotation.ty);
     }
-    // e_ctx.fillRect(box.x + box.w + e_angle, box.y + e_angle - 30, 30, 30);
     e_ctx.fillRect(box.x + box.w, box.y - 30, 30, 30);
     e_ctx.restore();
 
@@ -420,6 +463,15 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
         onMouseMove={mouseMove}
         onMouseUp={mouseUp}
         onMouseOut={mouseUp}
+        // touch
+        onTouchStart={(e) => {
+          mouseDown(e, true);
+        }}
+        onTouchMove={(e) => {
+          mouseMove(e, true);
+        }}
+        onTouchEnd={mouseUp}
+        onTouchCancel={mouseUp}
       />
       <span onClick={draw_a_rectangle_at_center} className='rectangle_icon' />
     </div>
