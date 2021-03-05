@@ -202,7 +202,7 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
       if (temp_x > cx) {
         box.x = box.x - scale_rate;
         box.w = box.w + scale_rate;
-      } else if (temp_x < cx && box.w > 50) {
+      } else if (temp_x < cx && box.w > 10) {
         box.x = box.x + scale_rate;
         box.w = box.w - scale_rate;
       }
@@ -217,7 +217,7 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
       if (temp_y < cy) {
         box.y = box.y;
         box.h = box.h + scale_rate;
-      } else if (temp_y > cy && box.h > 50) {
+      } else if (temp_y > cy && box.h > 10) {
         box.y = box.y;
         box.h = box.h - scale_rate;
       }
@@ -229,7 +229,7 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
     }
     // scale
     else if (drag_to_scale) {
-      if (temp_x > cx && box.w > 40 && box.h > 40) {
+      if (temp_x > cx && box.w > 10 && box.h > 10) {
         box.w = box.w - scale_rate;
         box.h = box.h - scale_rate;
       } else if (temp_x < cx) {
