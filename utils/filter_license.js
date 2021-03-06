@@ -30,7 +30,18 @@ let e_angle = 1;
 
 let scale_rate = 2;
 
+let box_center_width = null;
+let box_center_height = null;
+let distance_from_let = 0;
+let distance_from_top = 0;
+let e_rotation = false;
 let deactivate_scroll = false;
+
+let rotation_fire = false;
+let rotation_coordination = null;
+
+let rectangle_shape = null;
+let border_rectangle = null;
 
 const createImage = (url) =>
   new Promise((resolve, reject) => {
@@ -52,6 +63,8 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
+    rectangle_shape = new Path2D();
+    border_rectangle = new Path2D();
     create_canvas();
   }, []);
 
@@ -71,9 +84,22 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
     ratio = naturalWidth / main_container_inner_width;
 
     // build a canvas size for the image and scale it down
-    e_canvas.width = main_container_inner_width;
-    e_canvas.height = e_canvas.width / (16 / 9);
-    draw_the_image();
+    let width_page = window.innerWidth;
+    let height_page = window.innerHeight;
+    e_canvas.width = width_page;
+    e_canvas.height = window.innerHeight;
+
+    distance_from_top =
+      height_page - (height_page / 2 + 720 / (16 / 9) / 2) + 100;
+    if (width_page >= 720) {
+      distance_from_top = distance_from_top - 100;
+      distance_from_let = width_page - (width_page / 2 + 720 / 2);
+      width_page = 720;
+    }
+
+    box_center_width = width_page;
+    box_center_height = width_page / (16 / 9);
+    draw_the_image(false);
   };
 
   const scroll_deactivater = (event, event_name) => {
@@ -100,18 +126,24 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
     ); // mobile
   };
 
-  const draw_the_image = () => {
+  const draw_the_image = (rotation_fire) => {
     e_ctx.save();
+    // if (rotation_fire) {
+    //   e_ctx.translate(rotation_coordination.tx, rotation_coordination.ty);
+    //   e_ctx.rotate((rotation_coordination.angle * Math.PI) / 180);
+    //   e_ctx.translate(-rotation_coordination.tx, -rotation_coordination.ty);
+    // }
+    // e_ctx.setTransform(1, 0, 0, 1, 0, 0);
     e_ctx.drawImage(
       image_replica,
       0,
       0,
       naturalWidth,
       naturalHeight,
-      0,
-      0,
-      e_canvas.width,
-      e_canvas.height
+      distance_from_let,
+      distance_from_top,
+      box_center_width,
+      box_center_height
     );
     e_ctx.restore();
   };
@@ -130,12 +162,16 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
     if (!box) {
       draw_a_rectangle_at_center();
     } else {
-      if (
-        cx >= box.x &&
-        cx <= box.x + box.w &&
-        cy >= box.y &&
-        cy <= box.y + box.h
-      ) {
+      if (e_ctx.isPointInPath(border_rectangle, cx, cy)) {
+        console.log("border_rectangle");
+      }
+      if (e_ctx.isPointInPath(rectangle_shape, cx, cy)) {
+        // if (
+        //   cx >= box.x &&
+        //   cx <= box.x + box.w &&
+        //   cy >= box.y &&
+        //   cy <= box.y + box.h
+        // ) {
         console.log("inside");
         drag_to_move_rectangle = true;
       } else if (
@@ -194,7 +230,7 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
       // clear the canvas before drawing
       e_ctx.clearRect(0, 0, e_canvas.width, e_canvas.height);
       // draw the background of the image
-      draw_the_image();
+      draw_the_image(e_rotation);
       draw(box);
     }
     // width
@@ -202,14 +238,14 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
       if (temp_x > cx) {
         box.x = box.x - scale_rate;
         box.w = box.w + scale_rate;
-      } else if (temp_x < cx && box.w > 10) {
+      } else if (temp_x < cx && box.w > 20) {
         box.x = box.x + scale_rate;
         box.w = box.w - scale_rate;
       }
       // clear the canvas before drawing
       e_ctx.clearRect(0, 0, e_canvas.width, e_canvas.height);
       // draw the background of the image
-      draw_the_image();
+      draw_the_image(e_rotation);
       draw(box);
     }
     // height
@@ -217,19 +253,19 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
       if (temp_y < cy) {
         box.y = box.y;
         box.h = box.h + scale_rate;
-      } else if (temp_y > cy && box.h > 10) {
+      } else if (temp_y > cy && box.h > 20) {
         box.y = box.y;
         box.h = box.h - scale_rate;
       }
       // clear the canvas before drawing
       e_ctx.clearRect(0, 0, e_canvas.width, e_canvas.height);
       // draw the background of the image
-      draw_the_image();
+      draw_the_image(e_rotation);
       draw(box);
     }
     // scale
     else if (drag_to_scale) {
-      if (temp_x > cx && box.w > 10 && box.h > 10) {
+      if (temp_x > cx && box.w > 20 && box.h > 20) {
         box.w = box.w - scale_rate;
         box.h = box.h - scale_rate;
       } else if (temp_x < cx) {
@@ -240,7 +276,7 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
       e_ctx.clearRect(0, 0, e_canvas.width, e_canvas.height);
 
       // draw the background of the image
-      draw_the_image();
+      draw_the_image(e_rotation);
 
       draw(box);
     }
@@ -256,7 +292,13 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
       // // clear the canvas before drawing
       e_ctx.clearRect(0, 0, e_canvas.width, e_canvas.height);
       // draw the background of the image
-      draw_the_image();
+      draw_the_image(e_rotation);
+      e_rotation = true;
+      rotation_coordination = {
+        tx: center_x,
+        ty: center_y,
+        angle: e_angle,
+      };
       draw(box, {
         tx: center_x,
         ty: center_y,
@@ -270,7 +312,7 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
 
   function mouseUp(e) {
     e.preventDefault();
-    console.log("up or cancel");
+    // console.log("up or cancel");
     if (drag_to_move_rectangle) {
       drag_to_move_rectangle = false;
       temp_x = null;
@@ -327,104 +369,132 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
     e_ctx.restore();
 
     // draw the rectangle
-    e_ctx.save();
     e_ctx.beginPath();
-    e_ctx.fillStyle = "#FFFFFF";
+    rectangle_shape.rect(point.x, point.y, point.w, point.h);
+    e_ctx.fill(rectangle_shape);
+    e_ctx.clearRect(0, 0, e_canvas.width, e_canvas.height);
+    draw_the_image(e_rotation);
+
     if (rotation) {
       e_ctx.translate(rotation.tx, rotation.ty);
       e_ctx.rotate((rotation.angle * Math.PI) / 180);
       e_ctx.translate(-rotation.tx, -rotation.ty);
+
+      e_ctx.save();
+      rectangle_shape.rect(point.x, point.y, point.w, point.h);
+      e_ctx.fill(rectangle_shape);
+      e_ctx.restore();
     }
-    e_ctx.fillRect(point.x, point.y, point.w, point.h);
-    e_ctx.restore();
+    // e_ctx.beginPath();
+    // e_ctx.fillStyle = "#FFFFFF";
+    // if (rotation) {
+    //   e_ctx.translate(rotation.tx, rotation.ty);
+    //   e_ctx.rotate((rotation.angle * Math.PI) / 180);
+    //   e_ctx.translate(-rotation.tx, -rotation.ty);
+    // }
+    // e_ctx.fillRect(point.x, point.y, point.w, point.h);
+    // e_ctx.restore();
 
     // draw the border container
-    e_ctx.save();
     e_ctx.beginPath();
+    // let border_rectangle = new Path2D();
+    // border_rectangle.rect(170, 60, 50, 20);
+    // e_ctx.stroke(border_rectangle);
+    border_rectangle.rect(170, 60, 50, 20);
+    e_ctx.stroke(border_rectangle);
+    e_ctx.strokeStyle = "#585858";
+    e_ctx.strokeRect(point.x - 32, point.y - 32, point.w + 64, point.h + 64);
+    e_ctx.clearRect(0, 0, e_canvas.width, e_canvas.height);
+    draw_the_image(e_rotation);
+
     if (rotation) {
       e_ctx.translate(rotation.tx, rotation.ty);
       e_ctx.rotate((rotation.angle * Math.PI) / 180);
       e_ctx.translate(-rotation.tx, -rotation.ty);
     }
+    e_ctx.save();
+    // e_ctx.clearRect(0, 0, e_canvas.width, e_canvas.height);
+    border_rectangle.rect(170, 60, 50, 20);
+    e_ctx.stroke(border_rectangle);
     e_ctx.strokeStyle = "#585858";
-    e_ctx.strokeRect(point.x - 12, point.y - 12, point.w + 24, point.h + 24);
+    e_ctx.strokeRect(point.x - 32, point.y - 32, point.w + 64, point.h + 64);
     e_ctx.restore();
 
-    // draw the the left handle
-    e_ctx.save();
-    e_ctx.beginPath();
-    e_ctx.fillStyle = "#FFFFFF";
-    if (rotation) {
-      e_ctx.translate(rotation.tx, rotation.ty);
-      e_ctx.rotate((rotation.angle * Math.PI) / 180);
-      e_ctx.translate(-rotation.tx, -rotation.ty);
-    }
-    e_ctx.arc(point.x - 12, point.y + point.h / 2, radius, 0, 2 * Math.PI);
-    e_ctx.fill();
-    e_ctx.lineWidth = 1;
-    e_ctx.strokeStyle = "#585858";
-    e_ctx.stroke();
-    e_ctx.restore();
+    // // draw the the left handle
+    // e_ctx.save();
+    // e_ctx.beginPath();
+    // e_ctx.fillStyle = "#FFFFFF";
+    // if (rotation) {
+    //   e_ctx.translate(rotation.tx, rotation.ty);
+    //   e_ctx.rotate((rotation.angle * Math.PI) / 180);
+    //   e_ctx.translate(-rotation.tx, -rotation.ty);
+    // }
+    // e_ctx.arc(point.x - 12, point.y + point.h / 2, radius, 0, 2 * Math.PI);
+    // e_ctx.fill();
+    // e_ctx.lineWidth = 1;
+    // e_ctx.strokeStyle = "#585858";
+    // e_ctx.stroke();
+    // e_ctx.restore();
 
-    // draw the the corner handle
-    e_ctx.save();
-    e_ctx.beginPath();
-    e_ctx.fillStyle = "#FFFFFF";
-    if (rotation) {
-      e_ctx.translate(rotation.tx, rotation.ty);
-      e_ctx.rotate((rotation.angle * Math.PI) / 180);
-      e_ctx.translate(-rotation.tx, -rotation.ty);
-    }
-    e_ctx.arc(
-      point.x + point.w + 12,
-      point.y + point.h + 12,
-      radius,
-      0,
-      2 * Math.PI
-    );
-    e_ctx.fill();
-    e_ctx.lineWidth = 1;
-    e_ctx.strokeStyle = "#585858";
-    e_ctx.stroke();
-    e_ctx.restore();
+    // // draw the the corner handle
+    // e_ctx.save();
+    // e_ctx.beginPath();
+    // e_ctx.fillStyle = "#FFFFFF";
+    // if (rotation) {
+    //   e_ctx.translate(rotation.tx, rotation.ty);
+    //   e_ctx.rotate((rotation.angle * Math.PI) / 180);
+    //   e_ctx.translate(-rotation.tx, -rotation.ty);
+    // }
+    // e_ctx.arc(
+    //   point.x + point.w + 12,
+    //   point.y + point.h + 12,
+    //   radius,
+    //   0,
+    //   2 * Math.PI
+    // );
+    // e_ctx.fill();
+    // e_ctx.lineWidth = 1;
+    // e_ctx.strokeStyle = "#585858";
+    // e_ctx.stroke();
+    // e_ctx.restore();
 
-    // draw the the top right corner handle
-    e_ctx.save();
-    e_ctx.beginPath();
-    e_ctx.fillStyle = "#FFFFFF";
-    if (rotation) {
-      e_ctx.translate(rotation.tx, rotation.ty);
-      e_ctx.rotate((rotation.angle * Math.PI) / 180);
-      e_ctx.translate(-rotation.tx, -rotation.ty);
-    }
-    e_ctx.arc(point.x + point.w + 12, point.y - 12, radius, 0, 2 * Math.PI);
-    e_ctx.fill();
-    e_ctx.lineWidth = 1;
-    e_ctx.strokeStyle = "#585858";
-    e_ctx.stroke();
-    e_ctx.restore();
+    // // draw the the top right corner handle
+    // e_ctx.save();
+    // e_ctx.beginPath();
+    // e_ctx.fillStyle = "#FFFFFF";
+    // if (rotation) {
+    //   e_ctx.translate(rotation.tx, rotation.ty);
+    //   e_ctx.rotate((rotation.angle * Math.PI) / 180);
+    //   e_ctx.translate(-rotation.tx, -rotation.ty);
+    // }
+    // e_ctx.arc(point.x + point.w + 12, point.y - 12, radius, 0, 2 * Math.PI);
+    // e_ctx.fill();
+    // e_ctx.lineWidth = 1;
+    // e_ctx.strokeStyle = "#585858";
+    // e_ctx.stroke();
+    // e_ctx.restore();
 
-    // draw the the bottom handle
-    e_ctx.save();
-    e_ctx.beginPath();
-    e_ctx.fillStyle = "#FFFFFF";
-    if (rotation) {
-      e_ctx.translate(rotation.tx, rotation.ty);
-      e_ctx.rotate((rotation.angle * Math.PI) / 180);
-      e_ctx.translate(-rotation.tx, -rotation.ty);
-    }
-    e_ctx.arc(
-      point.x + point.w / 2,
-      point.y + point.h + 12,
-      radius,
-      0,
-      2 * Math.PI
-    );
-    e_ctx.fill();
-    e_ctx.lineWidth = 1;
-    e_ctx.strokeStyle = "#585858";
-    e_ctx.stroke();
-    e_ctx.restore();
+    // // draw the the bottom handle
+    // e_ctx.save();
+    // e_ctx.beginPath();
+    // e_ctx.fillStyle = "#FFFFFF";
+    // if (rotation) {
+    //   e_ctx.translate(rotation.tx, rotation.ty);
+    //   e_ctx.rotate((rotation.angle * Math.PI) / 180);
+    //   e_ctx.translate(-rotation.tx, -rotation.ty);
+    // }
+    // e_ctx.arc(
+    //   point.x + point.w / 2,
+    //   point.y + point.h + 12,
+    //   radius,
+    //   0,
+    //   2 * Math.PI
+    // );
+    // e_ctx.fill();
+    // e_ctx.lineWidth = 1;
+    // e_ctx.strokeStyle = "#585858";
+    // e_ctx.stroke();
+    // e_ctx.restore();
   }
 
   const draw_a_rectangle_at_center = async () => {
@@ -433,25 +503,27 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
     let center_x = e_canvas.width / 2 - width / 2;
     let center_y = e_canvas.height / 2 - width / 4;
     e_angle = 1;
+    e_rotation = null;
+    rotation_coordination = null;
     // clear the canvas before drawing
     e_ctx.clearRect(0, 0, e_canvas.width, e_canvas.height);
 
     // draw the background of the image
-    draw_the_image();
+    draw_the_image(e_rotation);
 
     // save the rectangle data to the global variable
     box = {
       x: center_x,
       y: center_y,
       w: width,
-      h: width / 2,
+      h: width / 4.5,
     };
 
     draw({
       x: center_x,
       y: center_y,
       w: width,
-      h: width / 2,
+      h: width / 4.5,
     });
   };
 
@@ -473,9 +545,30 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
         onTouchEnd={mouseUp}
         onTouchCancel={mouseUp}
       />
-      <span onClick={draw_a_rectangle_at_center} className='rectangle_icon' />
+      {/* <span onClick={draw_a_rectangle_at_center} className='rectangle_icon' /> */}
     </div>
   );
 };
 
 export default Filter_license;
+
+// radius
+// e_ctx.moveTo(point.x + 10, point.y);
+// e_ctx.arcTo(
+//   point.x + point.w,
+//   point.y,
+//   point.x + point.w,
+//   point.y + point.h,
+//   10
+// );
+// e_ctx.arcTo(
+//   point.x + point.w,
+//   point.y + point.h,
+//   point.x,
+//   point.y + point.h,
+//   10
+// );
+// e_ctx.arcTo(point.x, point.y + point.h, point.x, point.y, 10);
+// e_ctx.arcTo(point.x, point.y, point.x + point.w, point.y, 10);
+// e_ctx.closePath();
+// e_ctx.fill();

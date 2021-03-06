@@ -2,13 +2,17 @@
 
 .container_size {
   position: fixed;
+  display: flex;
   top: 0;
   left: 0;
   right: 0;
   margin: auto;
   height: 100%;
   background: #ddd;
-  z-index: 99999;
+  z-index: 999;
+  align-items: center;
+  justify-content: center;
+
   .rectangle_icon {
     width: 50px;
     height: 20px;
