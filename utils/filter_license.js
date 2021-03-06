@@ -42,6 +42,9 @@ let rotation_coordination = null;
 
 let rectangle_shape = null;
 let border_rectangle = null;
+let rotation_handle = null;
+
+let rectangular_test = null;
 
 const createImage = (url) =>
   new Promise((resolve, reject) => {
@@ -65,6 +68,8 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
   useEffect(() => {
     rectangle_shape = new Path2D();
     border_rectangle = new Path2D();
+    rotation_handle = new Path2D();
+    rectangular_test = new Path2D();
     create_canvas();
   }, []);
 
@@ -127,7 +132,7 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
   };
 
   const draw_the_image = (rotation_fire) => {
-    e_ctx.save();
+    // e_ctx.save();
     // if (rotation_fire) {
     //   e_ctx.translate(rotation_coordination.tx, rotation_coordination.ty);
     //   e_ctx.rotate((rotation_coordination.angle * Math.PI) / 180);
@@ -145,7 +150,7 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
       box_center_width,
       box_center_height
     );
-    e_ctx.restore();
+    // e_ctx.restore();
   };
 
   function mouseDown(e, touch) {
@@ -162,10 +167,11 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
     if (!box) {
       draw_a_rectangle_at_center();
     } else {
-      if (e_ctx.isPointInPath(border_rectangle, cx, cy)) {
-        console.log("border_rectangle");
-      }
-      if (e_ctx.isPointInPath(rectangle_shape, cx, cy)) {
+      // if (e_ctx.isPointInPath(border_rectangle, cx, cy)) {
+      if (e_ctx.isPointInPath(rectangular_test, cx, cy)) {
+        console.log("top red");
+        drag_to_rotate = true;
+      } else if (e_ctx.isPointInPath(rectangle_shape, cx, cy)) {
         // if (
         //   cx >= box.x &&
         //   cx <= box.x + box.w &&
@@ -196,10 +202,11 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
       ) {
         drag_to_scale = true;
       } else if (
-        cx >= box.x + box.w &&
-        cx <= box.x + box.w + 30 &&
-        cy >= box.y + -30 &&
-        cy <= box.y
+        // cx >= box.x + box.w &&
+        // cx <= box.x + box.w + 30 &&
+        // cy >= box.y + -30 &&
+        // cy <= box.y
+        e_ctx.isPointInPath(rotation_handle, cx, cy)
       ) {
         console.log("top");
         drag_to_rotate = true;
@@ -290,6 +297,7 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
         e_angle = e_angle - scale_rate;
       }
       // // clear the canvas before drawing
+      // e_ctx.save();
       e_ctx.clearRect(0, 0, e_canvas.width, e_canvas.height);
       // draw the background of the image
       draw_the_image(e_rotation);
@@ -357,109 +365,82 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
   }
 
   function draw(point, rotation = null) {
+    e_ctx.beginPath();
+    // e_ctx.fillStyle = "red";
     e_ctx.save();
-    e_ctx.beginPath();
-    e_ctx.fillStyle = "red";
-    if (rotation) {
-      e_ctx.translate(rotation.tx, rotation.ty);
-      e_ctx.rotate((rotation.angle * Math.PI) / 180);
-      e_ctx.translate(-rotation.tx, -rotation.ty);
-    }
-    e_ctx.fillRect(box.x + box.w, box.y - 30, 30, 30);
-    e_ctx.restore();
-
-    // draw the rectangle
-    e_ctx.beginPath();
-    rectangle_shape.rect(point.x, point.y, point.w, point.h);
-    e_ctx.fill(rectangle_shape);
-    e_ctx.clearRect(0, 0, e_canvas.width, e_canvas.height);
-    draw_the_image(e_rotation);
-
-    if (rotation) {
-      e_ctx.translate(rotation.tx, rotation.ty);
-      e_ctx.rotate((rotation.angle * Math.PI) / 180);
-      e_ctx.translate(-rotation.tx, -rotation.ty);
-
-      e_ctx.save();
-      rectangle_shape.rect(point.x, point.y, point.w, point.h);
-      e_ctx.fill(rectangle_shape);
-      e_ctx.restore();
-    }
-    // e_ctx.beginPath();
-    // e_ctx.fillStyle = "#FFFFFF";
-    // if (rotation) {
-    //   e_ctx.translate(rotation.tx, rotation.ty);
-    //   e_ctx.rotate((rotation.angle * Math.PI) / 180);
-    //   e_ctx.translate(-rotation.tx, -rotation.ty);
-    // }
-    // e_ctx.fillRect(point.x, point.y, point.w, point.h);
-    // e_ctx.restore();
-
-    // draw the border container
-    e_ctx.beginPath();
-    // let border_rectangle = new Path2D();
-    // border_rectangle.rect(170, 60, 50, 20);
-    // e_ctx.stroke(border_rectangle);
-    border_rectangle.rect(170, 60, 50, 20);
-    e_ctx.stroke(border_rectangle);
-    e_ctx.strokeStyle = "#585858";
-    e_ctx.strokeRect(point.x - 32, point.y - 32, point.w + 64, point.h + 64);
-    e_ctx.clearRect(0, 0, e_canvas.width, e_canvas.height);
-    draw_the_image(e_rotation);
-
-    if (rotation) {
-      e_ctx.translate(rotation.tx, rotation.ty);
-      e_ctx.rotate((rotation.angle * Math.PI) / 180);
-      e_ctx.translate(-rotation.tx, -rotation.ty);
-    }
-    e_ctx.save();
+    rectangular_test.rect(box.x + box.w, box.y - 30, 30, 30);
     // e_ctx.clearRect(0, 0, e_canvas.width, e_canvas.height);
-    border_rectangle.rect(170, 60, 50, 20);
-    e_ctx.stroke(border_rectangle);
-    e_ctx.strokeStyle = "#585858";
-    e_ctx.strokeRect(point.x - 32, point.y - 32, point.w + 64, point.h + 64);
+    // draw_the_image(e_rotation);
+    // e_ctx.fill(rectangular_test);
+
+    if (rotation) {
+      e_ctx.translate(rotation.tx, rotation.ty);
+      e_ctx.rotate((rotation.angle * Math.PI) / 180);
+      e_ctx.translate(-rotation.tx, -rotation.ty);
+    }
+    e_ctx.fillStyle = "red";
+    rectangular_test.rect(box.x + box.w, box.y - 30, 30, 30);
+    e_ctx.fill(rectangular_test);
     e_ctx.restore();
 
-    // // draw the the left handle
-    // e_ctx.save();
-    // e_ctx.beginPath();
-    // e_ctx.fillStyle = "#FFFFFF";
-    // if (rotation) {
-    //   e_ctx.translate(rotation.tx, rotation.ty);
-    //   e_ctx.rotate((rotation.angle * Math.PI) / 180);
-    //   e_ctx.translate(-rotation.tx, -rotation.ty);
-    // }
-    // e_ctx.arc(point.x - 12, point.y + point.h / 2, radius, 0, 2 * Math.PI);
-    // e_ctx.fill();
-    // e_ctx.lineWidth = 1;
-    // e_ctx.strokeStyle = "#585858";
-    // e_ctx.stroke();
-    // e_ctx.restore();
+    // e_ctx.fillRect(box.x + box.w, box.y - 30, 30, 30);
 
-    // // draw the the corner handle
-    // e_ctx.save();
+    // // draw the rectangle
     // e_ctx.beginPath();
+    // e_ctx.save();
     // e_ctx.fillStyle = "#FFFFFF";
+    // // e_ctx.clearRect(0, 0, e_canvas.width, e_canvas.height);
+    // // draw_the_image(e_rotation);
+
     // if (rotation) {
     //   e_ctx.translate(rotation.tx, rotation.ty);
     //   e_ctx.rotate((rotation.angle * Math.PI) / 180);
     //   e_ctx.translate(-rotation.tx, -rotation.ty);
     // }
-    // e_ctx.arc(
-    //   point.x + point.w + 12,
-    //   point.y + point.h + 12,
-    //   radius,
-    //   0,
-    //   2 * Math.PI
-    // );
-    // e_ctx.fill();
-    // e_ctx.lineWidth = 1;
+    // rectangle_shape.rect(point.x, point.y, point.w, point.h);
+    // e_ctx.fill(rectangle_shape);
+    // e_ctx.restore();
+    // // e_ctx.beginPath();
+    // // e_ctx.fillStyle = "#FFFFFF";
+    // // if (rotation) {
+    // //   e_ctx.translate(rotation.tx, rotation.ty);
+    // //   e_ctx.rotate((rotation.angle * Math.PI) / 180);
+    // //   e_ctx.translate(-rotation.tx, -rotation.ty);
+    // // }
+    // // e_ctx.fillRect(point.x, point.y, point.w, point.h);
+    // // e_ctx.restore();
+
+    // // draw the border container
+    // e_ctx.beginPath();
+    // e_ctx.save();
+    // // let border_rectangle = new Path2D();
+    // // border_rectangle.rect(170, 60, 50, 20);
+    // // e_ctx.stroke(border_rectangle);
+    // // border_rectangle.rect(170, 60, 50, 20);
+    // // e_ctx.stroke(border_rectangle);
+    // // e_ctx.strokeStyle = "#585858";
+    // // e_ctx.strokeRect(point.x - 32, point.y - 32, point.w + 64, point.h + 64);
+    // // e_ctx.clearRect(0, 0, e_canvas.width, e_canvas.height);
+    // // draw_the_image(e_rotation);
+
+    // if (rotation) {
+    //   e_ctx.translate(rotation.tx, rotation.ty);
+    //   e_ctx.rotate((rotation.angle * Math.PI) / 180);
+    //   e_ctx.translate(-rotation.tx, -rotation.ty);
+    // }
+    // // e_ctx.clearRect(0, 0, e_canvas.width, e_canvas.height);
     // e_ctx.strokeStyle = "#585858";
-    // e_ctx.stroke();
+    // border_rectangle.rect(
+    //   point.x - 32,
+    //   point.y - 32,
+    //   point.w + 64,
+    //   point.h + 64
+    // );
+    // e_ctx.stroke(border_rectangle);
+    // // e_ctx.strokeRect(point.x - 32, point.y - 32, point.w + 64, point.h + 64);
     // e_ctx.restore();
 
     // // draw the the top right corner handle
-    // e_ctx.save();
     // e_ctx.beginPath();
     // e_ctx.fillStyle = "#FFFFFF";
     // if (rotation) {
@@ -467,34 +448,79 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
     //   e_ctx.rotate((rotation.angle * Math.PI) / 180);
     //   e_ctx.translate(-rotation.tx, -rotation.ty);
     // }
-    // e_ctx.arc(point.x + point.w + 12, point.y - 12, radius, 0, 2 * Math.PI);
-    // e_ctx.fill();
-    // e_ctx.lineWidth = 1;
-    // e_ctx.strokeStyle = "#585858";
-    // e_ctx.stroke();
-    // e_ctx.restore();
-
-    // // draw the the bottom handle
     // e_ctx.save();
-    // e_ctx.beginPath();
-    // e_ctx.fillStyle = "#FFFFFF";
-    // if (rotation) {
-    //   e_ctx.translate(rotation.tx, rotation.ty);
-    //   e_ctx.rotate((rotation.angle * Math.PI) / 180);
-    //   e_ctx.translate(-rotation.tx, -rotation.ty);
-    // }
-    // e_ctx.arc(
-    //   point.x + point.w / 2,
-    //   point.y + point.h + 12,
+    // rotation_handle.arc(
+    //   point.x + point.w + 12,
+    //   point.y - 12,
     //   radius,
     //   0,
     //   2 * Math.PI
     // );
-    // e_ctx.fill();
+    // // e_ctx.arc(point.x + point.w + 12, point.y - 12, radius, 0, 2 * Math.PI);
     // e_ctx.lineWidth = 1;
     // e_ctx.strokeStyle = "#585858";
-    // e_ctx.stroke();
+    // e_ctx.stroke(rotation_handle);
+    // e_ctx.fill(rotation_handle);
     // e_ctx.restore();
+
+    // // // draw the the left handle
+    // // e_ctx.save();
+    // // e_ctx.beginPath();
+    // // e_ctx.fillStyle = "#FFFFFF";
+    // // if (rotation) {
+    // //   e_ctx.translate(rotation.tx, rotation.ty);
+    // //   e_ctx.rotate((rotation.angle * Math.PI) / 180);
+    // //   e_ctx.translate(-rotation.tx, -rotation.ty);
+    // // }
+    // // e_ctx.arc(point.x - 12, point.y + point.h / 2, radius, 0, 2 * Math.PI);
+    // // e_ctx.fill();
+    // // e_ctx.lineWidth = 1;
+    // // e_ctx.strokeStyle = "#585858";
+    // // e_ctx.stroke();
+    // // e_ctx.restore();
+
+    // // // draw the the corner handle
+    // // e_ctx.save();
+    // // e_ctx.beginPath();
+    // // e_ctx.fillStyle = "#FFFFFF";
+    // // if (rotation) {
+    // //   e_ctx.translate(rotation.tx, rotation.ty);
+    // //   e_ctx.rotate((rotation.angle * Math.PI) / 180);
+    // //   e_ctx.translate(-rotation.tx, -rotation.ty);
+    // // }
+    // // e_ctx.arc(
+    // //   point.x + point.w + 12,
+    // //   point.y + point.h + 12,
+    // //   radius,
+    // //   0,
+    // //   2 * Math.PI
+    // // );
+    // // e_ctx.fill();
+    // // e_ctx.lineWidth = 1;
+    // // e_ctx.strokeStyle = "#585858";
+    // // e_ctx.stroke();
+    // // e_ctx.restore();
+
+    // // // draw the the bottom handle
+    // // e_ctx.save();
+    // // e_ctx.beginPath();
+    // // e_ctx.fillStyle = "#FFFFFF";
+    // // if (rotation) {
+    // //   e_ctx.translate(rotation.tx, rotation.ty);
+    // //   e_ctx.rotate((rotation.angle * Math.PI) / 180);
+    // //   e_ctx.translate(-rotation.tx, -rotation.ty);
+    // // }
+    // // e_ctx.arc(
+    // //   point.x + point.w / 2,
+    // //   point.y + point.h + 12,
+    // //   radius,
+    // //   0,
+    // //   2 * Math.PI
+    // // );
+    // // e_ctx.fill();
+    // // e_ctx.lineWidth = 1;
+    // // e_ctx.strokeStyle = "#585858";
+    // // e_ctx.stroke();
   }
 
   const draw_a_rectangle_at_center = async () => {
@@ -518,7 +544,6 @@ const Filter_license = ({ imageSrc, pixelCrop, container_width }) => {
       w: width,
       h: width / 4.5,
     };
-
     draw({
       x: center_x,
       y: center_y,
