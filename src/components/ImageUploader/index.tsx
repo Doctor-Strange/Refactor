@@ -18,7 +18,8 @@ import { IoIosClose } from "react-icons/io";
 import Spinner from "../Spinner";
 import Cropper from "react-easy-crop";
 import getCroppedImg from "../../../utils/cropImage";
-import Filter_license from "../../../utils/filter_license";
+// import Filter_license from "../../../utils/filter_license";
+import ImageEditor from "../../../utils/image_editor";
 import ZoomSlider from "./ZoomSlider";
 
 import parking from "../../../public/image/test.jpg";
@@ -42,7 +43,8 @@ const ImageUploader = ({
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
 
-  const [filter, setfilter] = useState(false);
+  const [filter, setfilter] = useState(true);
+  const [edited_image, set_edited_image] = useState(null);
 
   const wrapperRef = useRef(null);
   const token = jsCookie.get("token");
@@ -182,13 +184,21 @@ const ImageUploader = ({
       {/* {covert_license ? ( */}
       {/* {filter && <ImageEditor />} */}
       {/* {filter && ( */}
-      <Filter_license
+      {/* <Filter_license
         // imageSrc={image_for_draw}
         imageSrc={parking}
         pixelCrop={croppedAreaPixels}
         container_width={container_width}
-      />
+      /> */}
       {/* )} */}
+      {filter ? (
+        <ImageEditor
+          show_change={() => setfilter(false)}
+          show_image_final={(e) => set_edited_image(e)}
+        />
+      ) : (
+        <img src={edited_image} />
+      )}
       <span onClick={() => setfilter(true)}>show</span>
       {/* ) : null} */}
       <div className='drop_zone' {...getRootProps()}>

@@ -1,0 +1,27 @@
+.editor_container {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  background: #000;
+  z-index: 999;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  .closeit {
+    position: fixed !important;
+    bottom: 0;
+    right: 0;
+    color: #ffffff;
+    z-index: 9992;
+  }
+  .saveit {
+    position: fixed !important;
+    bottom: 0;
+    right: 100px;
+    color: #ffffff;
+    z-index: 9992;
+  }
+}
