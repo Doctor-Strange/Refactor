@@ -382,7 +382,7 @@ const Add_Car_Step_2 = ({ language }: IAdd_Car_Step_2) => {
     } else {
       dispatch({
         type: "driver_status",
-        driver_status: 3,
+        driver_status: 1,
       });
     }
 

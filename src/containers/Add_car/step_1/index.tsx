@@ -98,7 +98,7 @@ let incompleteInfo = {
   cancellation_policy: null,
   price_per_day: null,
   with_driver: false,
-  without_driver: false,
+  without_driver: true,
   extra_km_price: null,
   extra_hour_price: null,
   max_km_per_day: null,
