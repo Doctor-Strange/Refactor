@@ -86,12 +86,16 @@ export const REQUEST_REQUEST_ACTION = (data: InewRentRequest) => {
             more = {
               user_profile_id: data.payload.user_profile_id,
               rate: data.payload.rate,
+            };
+          }
+          if (data.payload.type === "rent-order") {
+            ACTION_URL = SET_ORDER_RATE.RENTER.RENT_ORDER;
+            more = {
+              rate: data.payload.rate,
+              rent_order_id: data.id,
               review: data.payload.review,
             };
           }
-          // if (data.payload.type === 'rent-order') {
-          //   ACTION_URL = SET_ORDER_RATE.OWNER.RENT_ORDER;
-          // }
         }
         break;
     }
@@ -109,7 +113,6 @@ export const REQUEST_REQUEST_ACTION = (data: InewRentRequest) => {
         }
       )
       .then((response) => {
-        console.log(response);
         resolve({ ...response.data, message });
       })
       .catch((e) => {

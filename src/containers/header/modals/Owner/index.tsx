@@ -36,6 +36,18 @@ const Owner = (props: IRenter) => {
     e.preventDefault();
     setLoading(true);
     Promise.all([
+      // to rate order
+      REQUEST_REQUEST_ACTION({
+        token,
+        id: data.id,
+        action: data.action,
+        payload: {
+          toRate: "renter",
+          type: "rent-order",
+          rate: ownerRate,
+          review: textareaValue,
+        },
+      }),
       // rate render
       REQUEST_REQUEST_ACTION({
         token,
@@ -51,7 +63,6 @@ const Owner = (props: IRenter) => {
       }),
     ])
       .then((response) => {
-        console.log(response);
         TOAST_CONTEXT.toast_option({
           message: "با موفقیت انجام شد",
           time: 7,
