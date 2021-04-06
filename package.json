@@ -11,7 +11,8 @@
     "test:coverage": "SET NODE_ENV=production & jest --coverage",
     "docz:dev": "docz dev",
     "docz:build": "docz build",
-    "docz:serve": "docz build && docz serve"
+    "docz:serve": "docz build && docz serve",
+    "cypress": "./node_modules/.bin/cypress open"
   },
   "repository": {
     "type": "git",
