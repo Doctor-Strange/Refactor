@@ -1,10 +1,8 @@
-import moment from "moment-jalaali";
-moment.loadPersian({ dialect: "persian-modern" });
+import { set_default_date_for_search } from "../utils/set_defult_date_for_search";
 
-let search_from = null;
-let search_from_text = null;
-let search_to = null;
-let search_to_text = null;
+// "چک کردن تاریخ در باکس های تاریخ رفت و برگشت، شامل: مقدار تاریخ، فاصله 3 روزه بین انها و نمایش مقدار در در هردو باکس"
+const date = set_default_date_for_search();
+
 describe("تست یو-آی صفحه خانه", () => {
   const core_url = "https://core.sepris.com/core";
   beforeEach(() => {
@@ -135,49 +133,44 @@ describe("تست یو-آی صفحه خانه", () => {
 
     // .........................
     // DATE PICKER FUNCTIONALITY
-    // "چک کردن تاریخ در باکس های تاریخ رفت و برگشت، شامل: مقدار تاریخ، فاصله 3 روزه بین انها و نمایش مقدار در در هردو باکس"
-    const date = set_default_date_for_search();
     cy.get(
       ".search_box form .Date_picker_container .date_Input_Container .input_container:nth-of-type(2) input"
     )
       .invoke("val")
       .then((text) => {
-        expect(text).to.be.equal(date.from);
+        expect(text).to.be.equal(date.from_text_form);
       });
     cy.get(
       ".search_box form .Date_picker_container .date_Input_Container .input_container:nth-of-type(3) input"
     )
       .invoke("val")
       .then((text) => {
-        expect(text).to.be.equal(date.to);
+        expect(text).to.be.equal(date.to_text_form);
       });
   });
 
   // .........................
   // CLICK ON SEARCH BUTTON FUNCTIONALITY
-  it(`چک کردن کلیک بر روی دکمه 'جستجو' و رفتن به صفحه نتایج برای شهر تهران در تاریخ های  رفت و برگشت برای نمایش 15 تکرار، قیمت زیاد به کم`, () => {
-    cy.log(
-      cy
-        .intercept(
-          "GET",
-          core_url +
-            `/rental-car/search-for-rent/list?location_id=1&start_date=${search_from}&end_date=${search_to}&o=-price&page=1&limit=15`
-        )
-        .as("rentalCarList")
-        .get(".search_box form .search_Btn")
-        .click()
-        .url()
-        .should(
-          "contain",
-          `http://localhost:3000/search-result?location_id=1&location_name=%D8%AA%D9%87%D8%B1%D8%A7%D9%86&start_date=${search_from}&end_date=${search_to}&price_order=-price&page=1&limit=15`
-        )
-        .wait("@rentalCarList")
-        .then((result) => {
-          expect(result.response.statusCode).equal(200);
-          cy.wait(2000);
-          cy.go("back");
-        })
-    );
+  it(`چک کردن کلیک بر روی دکمه 'جستجو' و رفتن به صفحه نتایج برای شهر تهران در تاریخ  رفت ${date.from_date_form} و برگشت ${date.to_date_form}برای نمایش 15 تکرار، قیمت زیاد به کم`, () => {
+    cy.intercept(
+      "GET",
+      core_url +
+        `/rental-car/search-for-rent/list?location_id=1&start_date=${date.from_date_form}&end_date=${date.to_date_form}&o=-price&page=1&limit=15`
+    )
+      .as("rentalCarList")
+      .get(".search_box form .search_Btn")
+      .click()
+      .url()
+      .should(
+        "contain",
+        `http://localhost:3000/search-result?location_id=1&location_name=%D8%AA%D9%87%D8%B1%D8%A7%D9%86&start_date=${date.from_date_form}&end_date=${date.to_date_form}&price_order=-price&page=1&limit=15`
+      )
+      .wait("@rentalCarList")
+      .then((result) => {
+        expect(result.response.statusCode).equal(200);
+        cy.wait(2000);
+        cy.go("back");
+      });
   });
 });
 
@@ -227,23 +220,3 @@ describe("چک کردن سایت در حالت رسپانسیو", () => {
       .contains("تاریخ شروع و پایان نمی‌تواند یکسان باشد");
   });
 });
-
-const set_default_date_for_search = () => {
-  // if start date and end date is not set, automatically show the result for 3 to 6 days ahead
-  search_from_text = moment()
-    .add(3, "day")
-    .format("dddd jDD jMMMM");
-  search_from = moment()
-    .add(3, "day")
-    .format("jYYYY/jM/jD");
-  search_to_text = moment()
-    .add(6, "day")
-    .format("dddd jDD jMMMM");
-  search_to = moment()
-    .add(6, "day")
-    .format("jYYYY/jM/jD");
-  return {
-    from: search_from_text,
-    to: search_to_text,
-  };
-};
