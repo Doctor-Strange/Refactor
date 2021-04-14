@@ -54,7 +54,11 @@ const Search = ({ dynamic, searchSubmit, language }: ISearch) => {
   useEffect(() => {
     if (localStorage["User_Location"]) {
       let location_storage = JSON.parse(localStorage["User_Location"]);
-      if (location_storage.value == 1 || location_storage.value == 2) {
+      if (
+        location_storage.value == 1 ||
+        location_storage.value == 2 ||
+        location_storage.value == 1657
+      ) {
         setLocationId(location_storage.value);
         setLocationName(location_storage.text);
       }
@@ -200,7 +204,7 @@ const Search = ({ dynamic, searchSubmit, language }: ISearch) => {
             }
             Select={(i) => {
               localStorage["User_Location"] = JSON.stringify(i);
-              if (i.value !== 1 && i.value !== 2) {
+              if (i.value !== 1 && i.value !== 2 && i.value !== 1657) {
                 // setLocationId(i.key);
                 MODAL_CONTEXT.modalHandler("TellMe");
               } else {

@@ -36,6 +36,12 @@
     .text_input_container {
       margin: 0 0 3rem;
     }
+    .car_location_district {
+      margin: 0 0 3rem;
+      .DropDown_container {
+        margin: 0 0 0rem;
+      }
+    }
     .DropDown_container {
       .input_wrapper {
         input {
@@ -69,7 +75,7 @@
         .container {
           margin-bottom: 2.2rem;
           font-weight: 400;
-          color: $more_gray;
+          color: $almost_black;
         }
       }
       .gradient_transparent {
@@ -115,7 +121,7 @@
     .extra_text {
       margin: 0.4rem 0 1.6rem 0;
       font-size: 1.4rem;
-      color: $more_gray;
+      color: $almost_black;
       line-height: 2.7rem;
     }
     .form_title {
@@ -269,7 +275,7 @@
       font-size: 1.4rem;
       margin-top: 0.8rem;
       line-height: 2.7rem;
-      color: $more_gray;
+      color: $almost_black;
     }
     .text_area_step_1 {
       min-height: 15rem;
@@ -313,6 +319,12 @@
       .radio_father,
       .text_input_container {
         margin: 0 0 3rem;
+      }
+      .car_location_district {
+        margin: 0 0 3rem;
+        .DropDown_container {
+          margin: 0 0 0rem;
+        }
       }
       .Car_info_step_1 {
         display: block;
