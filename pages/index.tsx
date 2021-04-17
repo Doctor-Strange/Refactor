@@ -42,6 +42,7 @@ const HomePage = () => {
           cardType: language.next_seo.cardType,
         }}
       />
+      <input type='file' />
       <article className='Homepage'>
         <div className='banner'>
           <h1>{language.banner_h1}</h1>
