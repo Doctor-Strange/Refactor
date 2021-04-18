@@ -42,7 +42,8 @@ const HomePage = () => {
           cardType: language.next_seo.cardType,
         }}
       />
-      <input type='file' />
+      <p data-for='upload-photo'>Browse...</p>
+      <input type='file' id='upload-photo' />
       <article className='Homepage'>
         <div className='banner'>
           <h1>{language.banner_h1}</h1>
