@@ -22,7 +22,7 @@ export default class MyDocument extends Document {
           <meta httpEquiv='X-UA-Compatible' content='IE=edge' />
           <meta
             name='viewport'
-            content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no'
+            content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1'
           />
           {/* <meta name="viewport" content="width=device-width, initial-scale=1" /> */}
           <link rel='icon' type='image/svg+xml' href='/FaviconBlack.svg' />
@@ -188,6 +188,7 @@ export default class MyDocument extends Document {
 
           {/* Android   */}
           <link href='icon-192x192.png' rel='icon' sizes='192x192' />
+          <link href='icon-144x144.png' rel='icon' sizes='144x144' />
           <link href='icon-128x128.png' rel='icon' sizes='128x128' />
 
           {/* UC Browser   */}

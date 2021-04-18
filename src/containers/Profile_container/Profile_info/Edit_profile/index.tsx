@@ -287,11 +287,10 @@ const Edit_profile = ({
       />
       <div className='change_image_container'>
         <p>{language.change_the_profile_image}</p>
-
         <input
           type='file'
           id='file'
-          accept='.jpg,.jpeg,.png'
+          // accept='.jpg,.jpeg,.png'
           ref={file_input}
           onClick={() => {
             file_input.current.value = null;
