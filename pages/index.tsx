@@ -45,7 +45,7 @@ const HomePage = () => {
       {/* <p data-for='upload-photo'>Browse...</p> */}
       <label data-for='upload-photo'>
         Browseeeeeeeeeeeeeeeeeeeeeeeeeee...
-        <input type='file' id='upload-photo' name='photo' />
+        <input type='file' id='upload-photo' name='photo' hidden />
       </label>
       <br />
       <br />
