@@ -42,7 +42,10 @@ const JoinUs = ({ BotScore }) => {
         <section className='banner'>
           <h1>{language.h1}</h1>
           <h2>{language.h2} </h2>
-          <div className='responsive calculator_container'>
+          <div
+            className='responsive calculator_container'
+            data-test-id='calculator-form'
+          >
             {/* You can set the Button text when you call the Calculator component */}
             <Calculator
               language={language.calculator}

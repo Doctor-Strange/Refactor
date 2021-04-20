@@ -2,7 +2,11 @@ import React from "react";
 
 const ShowResult = ({ weekly, monthly, daily, language }: IShowResult) => {
   return (
-    <div className='CalculatorResult' id='CalculatorResult'>
+    <div
+      className='CalculatorResult'
+      id='CalculatorResult'
+      data-test-id='calculator-result-container'
+    >
       <div className='eachSvgBox'>
         {weekly > 0 && (
           <h3 className='CalcH3' data-test-id='weekly'>

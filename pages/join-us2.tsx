@@ -13,7 +13,7 @@ const JoinUs = ({ BotScore }) => {
     window["dataLayer"].push({
       event: "page_view",
       pageURL: window.location.href,
-      pagePath: "/join-us",
+      pagePath: "/join-us2",
       pageTitle: language.next_seo.title,
     });
     // logPageView();

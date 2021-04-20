@@ -157,7 +157,7 @@ const Calculator = ({ AbText, language }: ICalculator) => {
           <h2>{language.h2}</h2>
           <p className='title'>{language.p_title}</p>
           <form data-test-id='form' onSubmit={calculator}>
-            <div className='calculator_dropDown'>
+            <div className='calculator_dropDown' data-test-id='brand-name'>
               <DropdownSearch
                 data-test-id='brand'
                 search_place_holder={language.brand_place_holder}
@@ -194,7 +194,7 @@ const Calculator = ({ AbText, language }: ICalculator) => {
               />
               <span className='error_Field'>{brandError.message}</span>
             </div>
-            <div className='calculator_dropDown'>
+            <div className='calculator_dropDown' data-test-id='model-name'>
               <DropdownSearch
                 defaultVal={model.name}
                 data={modelList}
@@ -224,7 +224,7 @@ const Calculator = ({ AbText, language }: ICalculator) => {
               />
               <span className='error_Field'>{modelError.message}</span>
             </div>
-            <div className='value_container'>
+            <div className='value_container' data-test-id='car-price'>
               <TextInput
                 name='value'
                 number={true}
@@ -294,6 +294,7 @@ const Calculator = ({ AbText, language }: ICalculator) => {
           {/* show the calculation box */}
           <p
             className='tryAgainCalc'
+            data-test-id='try-again'
             onClick={() => {
               window.scrollTo(0, 0);
               // Reset the car value
