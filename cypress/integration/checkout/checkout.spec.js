@@ -42,6 +42,8 @@ describe("بررسی مسیر حرکت کاربر از خانه به صفجه چ
               .wait(5000)
               .url()
               .should("include", "/checkout")
+              .get("footer")
+              .should("have.class", "hide_footer")
               .get(".continue_to_pay button")
               .click()
               .wait(3000)
