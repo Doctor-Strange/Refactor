@@ -7,7 +7,7 @@ import language from "../public/languages/fa/_500.json";
 // import { logPageView } from "../utils/analytics";
 
 const page_500 = () => {
-   useEffect(() => {
+  useEffect(() => {
     window["dataLayer"].push({
       event: "page_view",
       pageURL: window.location.href,
