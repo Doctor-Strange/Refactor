@@ -111,12 +111,17 @@ const Rent = () => {
           </div>
           <div className='add_car_section'>
             <Link href='/add-car'>
-              <a className='Blue_BTN add_car_custom'>
+              <a
+                data-test-id='rent_add_car'
+                className='Blue_BTN add_car_custom'
+              >
                 {language.second_container_add_car_section_a_1}
               </a>
             </Link>
             <Link href='/join-us'>
-              <a>{language.second_container_add_car_section_a_2}</a>
+              <a data-test-id='rent_join_us'>
+                {language.second_container_add_car_section_a_2}
+              </a>
             </Link>
           </div>
           <div className='rent_contnet'>
@@ -141,6 +146,7 @@ const Rent = () => {
           itemScope
           itemType='https://schema.org/FAQPage'
           className='responsive'
+          data-test-id='QA_schema'
         >
           <Accordion question_set={question_set} />
         </div>
