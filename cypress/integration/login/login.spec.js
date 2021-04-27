@@ -11,22 +11,37 @@ describe("بررسی صفحه لاگین", () => {
   });
   it("بررسی عملکرد صفحه داینامیک", () => {
     cy.get(".HEAP_Header_Btn_Login a")
+      // .click()
+      // .wait(3000)
+      // .url()
+      // .should("contain", "/login")
+      // .go("back")
+      // .get(".add_car_section .Blue_BTN.add_car_custom")
+      // .click()
+      // .wait(6000)
+      // .url()
+      // .should("contain", "/login")
+      // .go("back")
+      // .go("back")
+      .get(".Blue_BTN.search_Btn.HEAP_Home_Btn_Search")
       .click()
-      .wait(3000)
+      .request(
+        "GET",
+        core_url +
+          `/rental-car/search-for-rent/list?location_id=1&start_date=${date.from_date_form}&end_date=${date.to_date_form}&o=-price&page=1&limit=1`
+      )
       .then(() => {
-        cy.url()
-          .should("contain", "/login")
-          .go("back")
-          .get(".add_car_section .Blue_BTN.add_car_custom")
+        cy.get(".carCart.HEAP_SearchResult_Card_Car")
+          .eq(0)
           .click()
-          .wait(6000)
+          .get(".Blue_BTN.localClass.HEAP_Car_Btn_Continue")
+          .click()
+          .get(".Blue_BTN.localClass.HEAP_Checkout_Btn_Book")
+          .click()
+          .wait(3000)
           .url()
           .should("contain", "/login")
-          .back()
-          .get()
-          .click()
-          .wait();
-        get().click().get;
+          .visit("/");
       });
   });
 });
