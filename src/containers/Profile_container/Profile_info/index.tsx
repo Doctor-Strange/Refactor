@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 // import "./profile_info.scss";
-import Edit_profile from "./Edit_profile";
+
 import { FiLogOut } from "react-icons/fi";
 import Button from "../../../components/form/Button";
 import context_user from "../../../context/User_info";
 import { useRouter } from "next/router";
 import jsCookie from "js-cookie";
+import Edit_profile from "./Edit_profile";
 
 const Profile_info = ({ is_mine, data, language }: IProfile_info) => {
   const [name, setName] = useState(null);
