@@ -9,7 +9,7 @@ import Recommendation_section from "../src/components/recommendation_section/rec
 // import Search from "../src/containers/Search";
 import insurance from "../public/image/SamanInsurance.png";
 import Link from "next/link";
-import language from "../public/languages/fa/homepage.json";
+import language from "../public/languages/en/homepage.json";
 import { guard_controller } from "../utils/guard_controller";
 // import { logPageView } from "../utils/analytics";
 

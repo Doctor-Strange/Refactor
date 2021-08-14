@@ -1,0 +1,60 @@
+﻿{
+  "next_seo": {
+    "title": "My Bookings | Sepris",
+    "description": "Your bookings and requests are listed here. View the details and the status, update the status and pay rental fee.  ",
+    "handle": "@seprisrent",
+    "site": "@seprisrent",
+    "cardType": "summary_large_image"
+  },
+  "request_page": {
+    "request_cart": {
+      "new": "Pending confirmation",
+      "approved": "Pending payment",
+      "rejected": "Declined",
+      "expired": "Expired",
+      "cancelled": "Cancelled",
+      "paid": "Pending Pick-up",
+      "delivered": "Delivered",
+      "returned_label": "Returned",
+      "accept": "Confirm",
+      "reject": "Decline",
+      "pay": "Pay",
+      "deliver": "I picked it up",
+      "returned": "I got it back",
+      "repetitive_review": "You have already submitted a review for this car.",
+      "review": "Submit Review",
+      "rent_duration": "Rental Period",
+      "day": "Day(s)",
+      "with_insurance": "Insurance included",
+      "without_insurance": "No insurance included",
+      "cost": "Rental Fee",
+      "toman": "$",
+      "for": "for",
+      "contact_with_renter": "Contact Renter"
+    },
+    "please_login": {
+      "GetUserCellPhone": {
+        "log_sigh": "Log In/Sign Up",
+        "cell_phone": "Mobile Phone",
+        "example": "e.g: +12012019999",
+        "error_1": "Please enter your mobile number.",
+        "error_2": "Mobile phone number must be 11 digits.",
+        "error_3": "Please enter a valid mobile number.",
+        "error_4": "Please enter a valid mobile number.",
+        "send": "Send Code"
+      },
+      "ConfirmCode": {
+        "confirm_code_title": "Enter Code",
+        "text_input_label_1": "the 4-digit confirmation code sent to",
+        "text_input_label_2": "Please enter",
+        "place_holder": "Enter the code here.",
+        "require": "Please enter the code.",
+        "length": "Confirmation code must be 4 digits",
+        "send_again": "Resend Code",
+        "seconds": "second(s)",
+        "edit_the_number": "Edit Mobile Number",
+        "enter": "Login"
+      }
+    }
+  }
+}

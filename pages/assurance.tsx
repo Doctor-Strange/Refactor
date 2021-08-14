@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 
 const Layout = dynamic(() => import("../src/Layout"));
 // import Layout from "../src/Layout";
-import language from "../public/languages/fa/assurance.json";
+import language from "../public/languages/en/assurance.json";
 // import { logPageView } from "../utils/analytics";
 
 const assurance = () => {
@@ -33,7 +33,7 @@ const assurance = () => {
         }}
       />
       {/* Most of the static pages have a same class named 'static_pages' which set some common style for the main wrapper box*/}
-      <article className='responsive static_pages minHeight'>
+      <article className="responsive static_pages minHeight">
         <h1>{language.h3}</h1>
         <p>{language.p} </p>
         <ul>

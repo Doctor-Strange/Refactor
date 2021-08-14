@@ -14,7 +14,7 @@ import key from "../public/image/key.png";
 import paper from "../public/image/paper.png";
 import carImage from "../public/image/car-image-thumbnail.jpg";
 import { NextSeo } from "next-seo";
-import language from "../public/languages/fa/paymentsucceed.json";
+import language from "../public/languages/en/paymentsucceed.json";
 // import { logPageView } from "../utils/analytics";
 
 moment.loadPersian({ dialect: "persian-modern" });

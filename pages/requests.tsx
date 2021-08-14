@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 const Layout = dynamic(() => import("../src/Layout"));
 const Requests_page = dynamic(() => import("../src/containers/Requests_page"));
 // import Layout from "../src/Layout";
-import language from "../public/languages/fa/requestspage.json";
+import language from "../public/languages/en/requestspage.json";
 // import { logPageView } from "../utils/analytics";
 // import Requests_page from "../src/containers/Requests_page";
 

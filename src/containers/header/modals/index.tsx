@@ -9,7 +9,7 @@ import Owner from "./Owner";
 import Law from "./Law";
 import Assurance from "./Assurance";
 import ConfirmDelete from "./ConfirmDelete";
-import language from "../../../../public/languages/fa/modals.json";
+import language from "../../../../public/languages/en/modals.json";
 import { FaArrowRight } from "react-icons/fa";
 const Modals = (props) => {
   const [change, setChange] = useState(false);
@@ -20,9 +20,9 @@ const Modals = (props) => {
   };
 
   return (
-    <div className='Modal'>
+    <div className="Modal">
       <div
-        data-test-id='Container_class'
+        data-test-id="Container_class"
         className={[
           "modal_box",
           // custom classes for different modals
@@ -44,33 +44,33 @@ const Modals = (props) => {
         ].join(" ")}
       >
         {/* close Icon */}
-        <div className='modal_box_div'>
+        <div className="modal_box_div">
           {props.modal_type === "Login" ? (
             change ? (
-              <div className='login_modal_title_confirm_code'>
+              <div className="login_modal_title_confirm_code">
                 <FaArrowRight
                   onClick={panelController}
-                  size='2rem'
-                  color='#4ba3ce'
-                  className='login_person_icon'
+                  size="2rem"
+                  color="#4ba3ce"
+                  className="login_person_icon"
                 />
                 <h2>{language.ConfirmCode.confirm_code_title}</h2>
               </div>
             ) : (
-              <div className='login_modal_title'>
+              <div className="login_modal_title">
                 <IoMdPerson
-                  size='2rem'
-                  color='#fff'
-                  className='login_person_icon'
+                  size="2rem"
+                  color="#fff"
+                  className="login_person_icon"
                 />
                 <h2>{language.GetUserCellPhone.log_sigh}</h2>
               </div>
             )
           ) : (
             <IoMdClose
-              className='close_btn'
-              color='rgb(165, 165, 165)'
-              size='2rem'
+              className="close_btn"
+              color="rgb(165, 165, 165)"
+              size="2rem"
               onClick={() => Modal_context.modalHandler()}
             />
           )}
@@ -93,20 +93,20 @@ const Modals = (props) => {
         // )
         // ?
         props.modal_type === "TellMe" ? (
-          <TellMe data-test-id='TellMe' />
+          <TellMe data-test-id="TellMe" />
         ) : props.modal_type === "Renter" ? (
-          <Renter data-test-id='Renter' data={props.data} />
+          <Renter data-test-id="Renter" data={props.data} />
         ) : props.modal_type === "Owner" ? (
-          <Owner data-test-id='Owner' data={props.data} />
+          <Owner data-test-id="Owner" data={props.data} />
         ) : props.modal_type === "Law" ? (
-          <Law data-test-id='Law' />
+          <Law data-test-id="Law" />
         ) : props.modal_type === "ConfirmDelete" ? (
-          <ConfirmDelete data-test-id='ConfirmDelete' data={props.data} />
+          <ConfirmDelete data-test-id="ConfirmDelete" data={props.data} />
         ) : props.modal_type === "Assurance" ? (
-          <Assurance data-test-id='Assurance' />
+          <Assurance data-test-id="Assurance" />
         ) : null}
       </div>
-      <div className='back_draw' onClick={() => Modal_context.modalHandler()} />
+      <div className="back_draw" onClick={() => Modal_context.modalHandler()} />
     </div>
   );
 };

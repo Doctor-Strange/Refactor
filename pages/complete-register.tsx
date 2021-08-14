@@ -8,7 +8,7 @@ const Complete_register_container = dynamic(() =>
 // import Layout from "../src/Layout";
 // import Complete_register_container from "../src/containers/CompleteRegister";
 import { NextSeo } from "next-seo";
-import language from "../public/languages/fa/completeregister.json";
+import language from "../public/languages/en/completeregister.json";
 // import { logPageView } from "../utils/analytics";
 
 const CompleteRegister = () => {

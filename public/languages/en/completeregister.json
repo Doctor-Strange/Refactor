@@ -1,0 +1,59 @@
+﻿{
+  "next_seo": {
+    "title": "Complete Sign-up | Sepris",
+    "description": "Complete sign-up to find your ideal rental car in Iran and book with confidence.",
+    "handle": "@seprisrent",
+    "site": "@seprisrent",
+    "cardType": "summary_large_image"
+  },
+  "please_login": {
+    "GetUserCellPhone": {
+      "log_sigh": "Log In/ Sign Up",
+      "cell_phone": "Mobile Phone ",
+      "example": "e.g: +12012019999 ",
+      "error_1": "Please enter your mobile number.",
+      "error_2": "Mobile phone number must be 11 digits. ",
+      "error_3": "Please enter a valid mobile number.",
+      "error_4": "Please enter a valid mobile number.",
+      "send": "Send Code"
+    },
+    "ConfirmCode": {
+      "confirm_code_title": "Enter Code",
+      "text_input_label_1": "the 4-digit code sent to ",
+      "text_input_label_2": "Please enter",
+      "place_holder": "Please enter the code.",
+      "require": "Please enter the code.",
+      "length": "Confirmation code must be 4 digits",
+      "send_again": "Resend Code",
+      "seconds": "second(s)",
+      "edit_the_number": "Edit Mobile Number",
+      "enter": "Login"
+    }
+  },
+  "fill_name": "Please Enter your name.",
+  "fill_name_name": "Please enter your last name.",
+  "fill_day": "Pleae enter your day of birth.",
+  "fill_correctly": "Please enter a valid number.",
+  "fill_month": "Please enter your month of birth.",
+  "fill_year": "Please enter your year of birth.",
+  "fill_policies": "Please accept Terms and Conditions.",
+  "complete_register": "Complete Sign-up",
+  "name": "Name",
+  "name_placeHolder": "Type your name.",
+  "last_name": "Last Name",
+  "last_name_place_holder": "Type your last name.",
+  "add_company_name": "Add company name",
+  "just_for_rental_companies": "Only for car rental companies",
+  "company_name": "Company Name",
+  "cancel": "Cancel",
+  "dob": "Date of Birth",
+  "day": "Day",
+  "error_1": "Please enter you date of birth.",
+  "error_2": "Day must be more that 1.",
+  "error_3": "Day must be less than 31.",
+  "year_example": "e.g: 1980",
+  "error_4": "Year must be 4 digits.",
+  "policies": "Terms and Conditions",
+  "i_agree": "I read and agree with Sepris",
+  "ok": "Confirm"
+}

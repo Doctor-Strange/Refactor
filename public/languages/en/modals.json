@@ -1,0 +1,24 @@
+﻿{
+  "GetUserCellPhone": {
+    "log_sigh": "Log In/Sign Up",
+    "cell_phone": "Mobile Phone",
+    "example": "e.g: +12012019999",
+    "error_1": "Please enter your mobile number.",
+    "error_2": "Mobile number must be 11 digits.",
+    "error_3": "Please enter a valid mobile number.",
+    "error_4": "Please enter a valid mobile number.",
+    "send": "Send Code"
+  },
+  "ConfirmCode": {
+    "confirm_code_title": "Enter Code",
+    "text_input_label_1": "the 4-digit confirmation code sent to",
+    "text_input_label_2": "Please enter",
+    "place_holder": "Enter the code",
+    "require": "Please enter the code.",
+    "length": "Confirmation code must be 4 digits",
+    "send_again": "Resend Code",
+    "seconds": "second(s)",
+    "edit_the_number": "Edit Mobile Number",
+    "enter": "Login"
+  }
+}

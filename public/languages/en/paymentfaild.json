@@ -1,0 +1,11 @@
+﻿{
+  "next_seo": {
+    "title": "Your payment has failed ",
+    "description": "Payment failed",
+    "handle": "@seprisrent",
+    "site": "@seprisrent",
+    "cardType": "summary_large_image"
+  },
+  "cancel": "Cancel Payment",
+  "main_page": "Back to \\My Bookings\\"
+}

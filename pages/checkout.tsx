@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 
 const Layout = dynamic(() => import("../src/Layout"));
 // import Layout from "../src/Layout";
-import language from "../public/languages/fa/checkout.json";
+import language from "../public/languages/en/checkout.json";
 import { NextSeo } from "next-seo";
 import { REQUEST_GET_RENTAL_CAR } from "../src/API";
 import Link from "next/link";
@@ -50,10 +50,10 @@ const Checkout = ({ order_information, expired }) => {
       )}
       <Layout hide={true}>
         {expired ? (
-          <article className='minHeight expired_order'>
+          <article className="minHeight expired_order">
             <p>{language.expired}</p>
-            <Link href='/' prefetch={false}>
-              <a className='_404PageAnchor Blue_BTN'>
+            <Link href="/" prefetch={false}>
+              <a className="_404PageAnchor Blue_BTN">
                 {language.return_to_home}
               </a>
             </Link>

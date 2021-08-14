@@ -1,0 +1,21 @@
+﻿{
+  "next_seo": {
+    "title": "Payment Successful",
+    "description": "payment has been successfully processed.",
+    "handle": "@seprisrent",
+    "site": "@seprisrent",
+    "cardType": "summary_large_image"
+  },
+  "h4": "Your payment has been completed successfully. ",
+  "car_image": "Car Image",
+  "span_1": "Amount Paid",
+  "span_2": "Pick-up Location",
+  "span_3": "In Tehran area; the car will be delivered to you at your location.",
+  "az": "From",
+  "ta": "to",
+  "time": "Rental Period",
+  "day": "Day(s)",
+  "limit": "Allowed mileage per day",
+  "kilometer": "kilometer",
+  "loading": "Processing Payment Details ..."
+}

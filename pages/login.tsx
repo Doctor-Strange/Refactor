@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { IoMdPerson } from "react-icons/io";
 import { NextSeo } from "next-seo";
-import language from "../public/languages/fa/login.json";
+import language from "../public/languages/en/login.json";
 
 import { FaArrowRight } from "react-icons/fa";
 import context_user from "../src/context/User_info";
@@ -64,7 +64,7 @@ const LoginPage = () => {
           cardType: language.next_seo.cardType,
         }}
       />
-      <div className='Please_login_container minHeight'>
+      <div className="Please_login_container minHeight">
         <div
           className={[
             "modal_box",
@@ -72,21 +72,21 @@ const LoginPage = () => {
           ].join(" ")}
         >
           {change ? (
-            <div className='login_modal_title_confirm_code'>
+            <div className="login_modal_title_confirm_code">
               <FaArrowRight
                 onClick={panelController}
-                size='2rem'
-                color='#4ba3ce'
-                className='login_person_icon'
+                size="2rem"
+                color="#4ba3ce"
+                className="login_person_icon"
               />
               <h2>{language.ConfirmCode.confirm_code_title}</h2>
             </div>
           ) : (
-            <div className='login_modal_title'>
+            <div className="login_modal_title">
               <IoMdPerson
-                size='2rem'
-                color='#fff'
-                className='login_person_icon'
+                size="2rem"
+                color="#fff"
+                className="login_person_icon"
               />
               <h2>{language.GetUserCellPhone.log_sigh}</h2>
             </div>
@@ -101,7 +101,7 @@ const LoginPage = () => {
           ) : (
             <GetUserCellPhone
               language={language.GetUserCellPhone}
-              data-test-id='GetUserCellPhone'
+              data-test-id="GetUserCellPhone"
               panelController={panelController}
               deactivate_form={deactivate_form}
             />
