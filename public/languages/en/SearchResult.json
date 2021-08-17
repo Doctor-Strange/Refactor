@@ -1,0 +1,79 @@
+﻿{
+  "nextSeo_title": "Car Rental Search Result | Sepris",
+  "nextSeo_description": "Sepris is an online platform for car rental in Iran, connecting local car owners to renters. Find your ideal rental car and book with confidence.",
+  "next_seo": {
+    "title": {
+      "start": "Search cars - Tehran",
+      "ta": "to",
+      "otoli": "| Sepris"
+    },
+    "description": "Sepris is an online platform for car rental in Iran, connecting local car owners to renters. Find your ideal rental car and book with confidence.",
+    "site_name": "Sepris",
+    "handle": "@seprisrent",
+    "site": "@seprisrent",
+    "cardType": "summar,y_large_image"
+  },
+  "count_bar_khodro": "cars",
+  "count_bar_ta": "to",
+  "count_bar_change_search_btn_close": "Close",
+  "count_bar_change_search_btn_p": "Modify Search",
+  "search": {
+    "label_location": "Pick-up Location",
+    "label_location_search_place_holder": "in cities",
+    "label_start_date": "Pick-up Date",
+    "error_empty_dates": "Pick-up and drop-off dates cannot be the same.",
+    "error_start_date": "Please select a pick-up date.",
+    "label_end_date": "Drop-off Date",
+    "error_end_date": "Please select a drop-off date.",
+    "btn": "Search"
+  },
+  "minimal_filters_car_location": "خودروهای ",
+  "price_sort_container_high_to_low": "Highest Price ",
+  "price_sort_container_low_to_high": "Lowest Price ",
+  "price_sort_container_advance_search_btn": "Advanced Search",
+  "minimal_filters_price_from": "Price from",
+  "minimal_filters_ta": "to",
+  "minimal_filters_deliver_to_your_location": "Delivery at location ",
+  "minimal_filters_with_deriver": "With driver",
+  "minimal_filters_without_driver": "Without driver",
+  "minimal_filters_body_style": "Filter by",
+  "minimal_filters_brand": "Filter by",
+  "minimal_filters_model": "Filter by model",
+  "filter": {
+    "filter_section_h3_1": "Rent Options",
+    "filter_section_check_box_deliver_at_renters_place": "Delivery at your location",
+    "filter_section_check_box_with_driver": "Rent with driver",
+    "filter_section_check_box_without_driver": "Rent without driver",
+    "filter_section_h3_2": "Car Type",
+    "filter_section_drop_down_1_label": "Car Company",
+    "filter_section_drop_down_1_place_holder": "in companies",
+    "filter_section_drop_down_2_label": "Model",
+    "filter_section_drop_down_2_place_holder": "in models",
+    "filter_section_result_count_wrapper_namayesh": "View Results",
+    "filter_section_result_count_wrapper_khodro": "cars",
+    "filter_section_result_count_wrapper_no_result": "No results found for these filters."
+  },
+  "search_result_section": {
+    "Not_Result_part_1": "Sorry, no results found for your search.",
+    "Not_Result_part_2": "If you have applied filters, please remove/refine them or search for another date.",
+    "Not_Result_part_3": "You can always call Sepris customer support at",
+    "Not_Result_part_4": "+982188567759",
+    "Not_Result_part_5": "",
+    "car": {
+      "thousand": "",
+      "million": "",
+      "discount": "% discount",
+      "special": "Special offer",
+      "default_image": "Car Thumbnail",
+      "show_details": "View Details",
+      "toman_per_day": "$ per day",
+      "delivar_at_your_palce": "Delivery at location",
+      "with_driver": "with driver",
+      "without_driver": "without driver"
+    }
+  },
+  "quick_access_middle_searchResult_h2": "Related Categories",
+  "quick_access_middle_searchResult_p_1": "SUVs",
+  "quick_access_middle_searchResult_p_2": "Economy Cars",
+  "Load_more_car": "Show more"
+}

@@ -1,0 +1,51 @@
+﻿{
+  "next_seo": {
+    "title": {
+      "start": "Car rental from",
+      "otoli": "Sepris"
+    },
+    "description": "Profile",
+    "handle": "@seprisrent",
+    "site": "@seprisrent",
+    "cardType": "summary_large_image"
+  },
+  "profile_info": {
+    "edit_the_profile_info": "Edit profile",
+    "exit": "Sign Out",
+    "add": "+ Add Car",
+    "edit_profile": {
+      "name_error": "Please enter a valid name/last name.",
+      "user_name_error": "Please enter a valid username.",
+      "company_name_error": "Please enter a valid company name.",
+      "change_the_profile_image": "Change Image",
+      "incorrect_picture_extension": "Please upload the image in JPEG format.",
+      "name": "Name",
+      "last_name": "Last Name",
+      "company_name": "Company Name",
+      "create_personal_link": "Add link address",
+      "personal_link": "Link Address",
+      "ok": "Confirm",
+      "cancel": "Cancel"
+    }
+  },
+  "profile_cars": {
+    "all": "All Cars",
+    "inactive": "Inactive Cars",
+    "active": "Active Cars",
+    "show_more_cars": "Show more",
+    "car": {
+      "khodro": "Your car",
+      "nemishe": "will not be displayed in search results.",
+      "mishe": "will be displayed in search results.",
+      "default_image": "Car Thumbnail ",
+      "details": "View Details",
+      "to_show_this_car": "Mandatory for displaying the car.",
+      "rent_condition": "Rental Terms",
+      "setting": "خودروتان را تعیین کنید.",
+      "awaiting_for_verified": "Pending confirmation by Sepris",
+      "edit_time_date": "Modify Date and Price",
+      "active_the_car": "Activate ",
+      "inactive_the_car": "Deactivate"
+    }
+  }
+}
