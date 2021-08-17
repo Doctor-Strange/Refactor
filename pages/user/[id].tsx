@@ -2,7 +2,6 @@ import dynamic from "next/dynamic";
 
 const Layout = dynamic(() => import("../../src/Layout"));
 // import Layout from "../../src/Layout";
-// import language from "../../public/languages/fa/user.json";
 import language from "../../public/languages/en/user.json";
 // import { logPageView } from "../../utils/analytics";
 
