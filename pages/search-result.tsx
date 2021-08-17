@@ -5,7 +5,7 @@ const Layout = dynamic(() => import("../src/Layout"));
 // const Search_result = dynamic(() => import("../src/containers/Search_result"));
 // import Layout from "../src/Layout";
 import { NextSeo } from "next-seo";
-import language from "../public/languages/en/searchresult.json";
+import language from "../public/languages/en/3earchresult.json";
 // import { logPageView } from "../utils/analytics";
 import { payBackInString } from "../utils/date-range-creator";
 import Search_result from "../src/containers/Search_result";
