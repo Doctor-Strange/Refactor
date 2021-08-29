@@ -222,9 +222,7 @@ class App_Otoli extends App {
           expires: 100,
         });
       this.setState({ user_data: { ...response, token } });
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   render() {
@@ -233,16 +231,16 @@ class App_Otoli extends App {
       // <GoogleReCaptchaProvider reCaptchaKey={process.env.GOOGLE_CAPTCHA}>
       <>
         {this.state.showPwaBanner ? (
-          <section className='pwa_invitation_banner'>
+          <section className="pwa_invitation_banner">
             <div
-              className='pwa_content HEAP_PWA_INVITATION'
+              className="pwa_content HEAP_PWA_INVITATION"
               onClick={this.customPwaPrompt}
             >
-              <img src={logo} alt='pwa logo icon' />
+              <img src={logo} alt="pwa logo icon" />
               اپلیکیشن سِپریس را نصب کنید.
             </div>
             <p
-              className='close_pwa_invitation'
+              className="close_pwa_invitation"
               onClick={() => {
                 this.AnalyticsEvent("pwa", "install-banner", "closed");
                 this.setState({
@@ -250,7 +248,7 @@ class App_Otoli extends App {
                 });
               }}
             >
-              <IoIosClose color='#fff' size='2rem' />
+              <IoIosClose color="#fff" size="2rem" />
               بستن
             </p>
           </section>
