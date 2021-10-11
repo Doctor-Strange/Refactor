@@ -1,14 +1,14 @@
-import Document, { Head, Main, NextScript, Html } from "next/document";
-import * as Sentry from "@sentry/browser";
+import Document, { Head, Main, NextScript, Html } from 'next/document';
+import * as Sentry from '@sentry/browser'; 
 
-process.on("unhandledRejection", (err) => {
-  if (process.env.NODE_ENV !== "development") {
+process.on('unhandledRejection', (err) => {
+  if (process.env.NODE_ENV !== 'development') {
     Sentry.captureException(err);
   }
 });
 
-process.on("uncaughtException", (err) => {
-  if (process.env.NODE_ENV !== "development") {
+process.on('uncaughtException', (err) => {
+  if (process.env.NODE_ENV !== 'development') {
     Sentry.captureException(err);
   }
 });
@@ -289,7 +289,7 @@ export default class MyDocument extends Document {
               src="https://www.googletagmanager.com/ns.html?id=GTM-TN3MV4L"
               height="0"
               width="0"
-              style={{ display: "none", visibility: "hidden" }}
+              style={{ display: 'none', visibility: 'hidden' }}
             ></iframe>
           </noscript>
           {/* <!-- End Google Tag Manager (noscript) --> */}

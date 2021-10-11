@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
-import Link from "next/link";
-import language from "../../../../public/languages/fa/header.json";
-import context_user from "../../../context/User_info";
-import Spinner from "../../../components/Spinner";
-import { useRouter } from "next/router";
-import NameAvatar from "../../../components/name_avatar/avatar-name";
+import React, { useContext, useEffect, useState } from 'react';
+import Link from 'next/link';
+import language from '../../../../public/languages/fa/header.json';
+import context_user from '../../../context/User_info';
+import languageCTX from '../../../context/languageCTX';
+import Spinner from '../../../components/Spinner';
+import { useRouter } from 'next/router';
+import NameAvatar from '../../../components/name_avatar/avatar-name';
 
 let token = null;
 let complete_register = null;
@@ -15,11 +16,13 @@ let user_id = null;
 
 const Menu = () => {
   const [spinner, set_spinner] = useState(false);
+  const [en, setEn] = useState();
   const user = useContext(context_user);
+  const local = useContext(languageCTX);
   const router = useRouter();
 
   useEffect(() => {
-    if (window["auth"] && !user.data) {
+    if (window['auth'] && !user.data) {
       set_spinner(true);
     }
   }, []);
@@ -49,8 +52,8 @@ const Menu = () => {
         ? username
         : first_name
         ? name
-        : "";
-    } else if (!window["auth"] && !user.data) {
+        : '';
+    } else if (!window['auth'] && !user.data) {
       token = null;
       complete_register = null;
       company_name = null;
@@ -120,6 +123,16 @@ const Menu = () => {
           </Link>
         </li>
       )}
+      <li
+        onClick={() => {
+          local.changingLanguage(local.activeLanguage === 'en' ? 'fa' : 'en');
+          router.push('/', '/', {
+            locale: local.activeLanguage === 'en' ? 'fa' : 'en',
+          });
+        }}
+      >
+        <span>{local.activeLanguage === 'en' ? 'fa' : 'en'}</span>
+      </li>
       {token ? (
         spinner ? (
           <li className="header_spinner">
@@ -131,16 +144,16 @@ const Menu = () => {
             <Link href={`/user/[id]`} as={`/user/${user_id}`} prefetch={false}>
               <a>
                 <span className="user-name">{profile && profile}</span>
-                {localStorage["red_dot"] === "1" && (
+                {localStorage['red_dot'] === '1' && (
                   <span className="red_dot" />
                 )}
-                {img_profile.search("default") === -1 ? (
+                {img_profile.search('default') === -1 ? (
                   <img
                     className="profile_icon"
                     // show user image or chow account icon
                     src={
                       img_profile ||
-                      "https://core.sepris.com/static/core/default_profile_pic.png"
+                      'https://core.sepris.com/static/core/default_profile_pic.png'
                     }
                     alt={profile}
                   />
@@ -167,12 +180,12 @@ const Menu = () => {
           className="HEAP_Header_Btn_Login"
           onClick={() => {
             if (
-              router.asPath !== "/login" &&
-              router.asPath !== "/complete-register"
+              router.asPath !== '/login' &&
+              router.asPath !== '/complete-register'
             )
-              localStorage["last_location"] = router.asPath;
+              localStorage['last_location'] = router.asPath;
             else {
-              localStorage["last_location"] = "/";
+              localStorage['last_location'] = '/';
             }
           }}
         >
