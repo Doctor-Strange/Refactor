@@ -1,29 +1,28 @@
-import { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
+import { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 
-const Layout = dynamic(() => import("../src/Layout"));
+const Layout = dynamic(() => import('../src/Layout'));
 // const Search_result = dynamic(() => import("../src/containers/Search_result"));
 // import Layout from "../src/Layout";
-import { NextSeo } from "next-seo";
-import language from "../public/languages/fa/searchresult.json";
+import { NextSeo } from 'next-seo';
 // import { logPageView } from "../utils/analytics";
-import { payBackInString } from "../utils/date-range-creator";
-import Search_result from "../src/containers/Search_result";
-import { guard_controller } from "../utils/guard_controller";
-import ContentHomePage from "../src/components/contentHomePage";
+import { payBackInString } from '../utils/date-range-creator';
+import Search_result from '../src/containers/Search_result';
+import { guard_controller } from '../utils/guard_controller';
+import ContentHomePage from '../src/components/contentHomePage';
 
-const AllCars = ({ content }) => {
+const AllCars = ({ content, locale }) => {
   const [authorize, set_authorize] = useState(true);
 
   useEffect(() => {
-    window["dataLayer"].push({
-      event: "page_view",
+    window['dataLayer'].push({
+      event: 'page_view',
       pageURL: window.location.href,
-      pagePath: "/all-cars",
-      pageTitle: `${language.next_seo.title.start}${language.next_seo.title.otoli}`,
+      pagePath: '/all-cars',
+      pageTitle: `${locale.searchResult.next_seo.title.start}${locale.searchResult.next_seo.title.otoli}`,
     });
     const guard = guard_controller();
-    if (guard !== "auth") {
+    if (guard !== 'auth') {
       set_authorize(false);
     }
     // logPageView();
@@ -32,26 +31,30 @@ const AllCars = ({ content }) => {
   return (
     <Layout>
       <NextSeo
-        title={`${language.next_seo.title.start}${language.next_seo.title.otoli}`}
-        description={language.nextSeo_description}
+        title={`${locale.searchResult.next_seo.title.start}${locale.searchResult.next_seo.title.otoli}`}
+        description={locale.searchResult.nextSeo_description}
         openGraph={{
-          title: `${language.next_seo.title.start}${language.next_seo.title.otoli}`,
-          description: language.next_seo.description,
-          site_name: language.next_seo.site_name,
+          title: `${locale.searchResult.next_seo.title.start}${locale.searchResult.next_seo.title.otoli}`,
+          description: locale.searchResult.next_seo.description,
+          site_name: locale.searchResult.next_seo.site_name,
         }}
         twitter={{
-          handle: language.next_seo.handle,
-          site: language.next_seo.site,
-          cardType: language.next_seo.cardType,
+          handle: locale.searchResult.next_seo.handle,
+          site: locale.searchResult.next_seo.site,
+          cardType: locale.searchResult.next_seo.cardType,
         }}
       />
       <Search_result
-        language={language}
+        language={locale.searchResult}
         revealRsearchbBox={true}
         showLocationTag={true}
       />
-      {content == "0" ? null : (
-        <ContentHomePage auth={authorize} differentStyle={true} />
+      {content == '0' ? null : (
+        <ContentHomePage
+          auth={authorize}
+          differentStyle={true}
+          language={locale.index}
+        />
       )}
     </Layout>
   );

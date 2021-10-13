@@ -1,15 +1,14 @@
 import dynamic from "next/dynamic";
 
 const Layout = dynamic(() => import("../../src/Layout"));
-// import Layout from "../../src/Layout";
-import language from "../../public/languages/fa/user.json";
+// import Layout from "../../src/Layout"; 
 // import { logPageView } from "../../utils/analytics";
 
 // const Profile_container = dynamic(() =>
 //   import("../../src/containers/Profile_container")
 // );
 import Profile_container from "../../src/containers/Profile_container";
-const Profile = () => {
+const Profile = ({locale}) => {
   // React.useEffect(() => {
   //   window["dataLayer"].push({
   //     event: "page_view",
@@ -21,7 +20,7 @@ const Profile = () => {
   // }, []);
   return (
     <Layout>
-      <Profile_container language={language} />
+      <Profile_container language={locale.user} />
     </Layout>
   );
 };

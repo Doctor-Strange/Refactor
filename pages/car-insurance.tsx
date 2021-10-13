@@ -1,61 +1,61 @@
-import { useEffect } from "react";
-import { NextSeo } from "next-seo";
-import dynamic from "next/dynamic";
+import { useEffect } from 'react';
+import { NextSeo } from 'next-seo';
+import dynamic from 'next/dynamic';
 
-const Layout = dynamic(() => import("../src/Layout"));
+const Layout = dynamic(() => import('../src/Layout'));
 // import Layout from "../src/Layout";
-import language from "../public/languages/fa/carinsurance.json";
 // import { logPageView } from "../utils/analytics";
-const car_insurance_page = () => {
+const car_insurance_page = ({ locale }) => {
   useEffect(() => {
-    window["dataLayer"].push({
-      event: "page_view",
+    window['dataLayer'].push({
+      event: 'page_view',
       pageURL: window.location.href,
-      pagePath: "/car-insurance",
-      pageTitle: language.next_seo.title,
+      pagePath: '/car-insurance',
+      pageTitle: locale.carInsurance.next_seo.title,
     });
     // logPageView();
   }, []);
   return (
     <Layout showToTop={true}>
       <NextSeo
-        title={language.next_seo.title}
-        description={language.next_seo.description}
+        title={locale.carInsurance.next_seo.title}
+        description={locale.carInsurance.next_seo.description}
         openGraph={{
-          title: language.next_seo.title,
-          description: language.next_seo.description,
+          title: locale.carInsurance.next_seo.title,
+          description: locale.carInsurance.next_seo.description,
         }}
         twitter={{
-          handle: language.next_seo.handle,
-          site: language.next_seo.site,
-          cardType: language.next_seo.cardType,
+          handle: locale.carInsurance.next_seo.handle,
+          site: locale.carInsurance.next_seo.site,
+          cardType: locale.carInsurance.next_seo.cardType,
         }}
       />
       {/* Most of the static pages have a same class named 'static_pages' which set some common style for the main wrapper box*/}
       <article className="responsive static_pages minHeight">
-        <h1>{language.h1}</h1>
-        <h2>{language.h2}</h2>
-        <p>{language.p_1}</p>
+        <h1>{locale.carInsurance.h1}</h1>
+        <h2>{locale.carInsurance.h2}</h2>
+        <p>{locale.carInsurance.p_1}</p>
         <ul>
           <li>
-            <strong>{language.string_1} </strong>
-            {language.li_1}
+            <strong>{locale.carInsurance.string_1} </strong>
+            {locale.carInsurance.li_1}
           </li>
           <li>
-            <strong>{language.string_2} </strong> {language.li_2}
+            <strong>{locale.carInsurance.string_2} </strong>{' '}
+            {locale.carInsurance.li_2}
           </li>
           <li>
-            <strong>{language.string_3} </strong>
-            {language.li_3}
+            <strong>{locale.carInsurance.string_3} </strong>
+            {locale.carInsurance.li_3}
           </li>
           <li>
-            <strong>{language.li_4}</strong>
+            <strong>{locale.carInsurance.li_4}</strong>
           </li>
           <li>
-            <strong>{language.li_5}</strong>
+            <strong>{locale.carInsurance.li_5}</strong>
           </li>
         </ul>
-        <p> {language.li_6}</p>
+        <p> {locale.carInsurance.li_6}</p>
       </article>
     </Layout>
   );

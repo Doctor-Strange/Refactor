@@ -1,14 +1,26 @@
-import { useState, useRef, useEffect } from "react";
-import { FaLanguage } from "react-icons/fa";
+import { useState, useRef, useEffect } from 'react';
+import { useRouter } from 'next/router';
 // import "./inputStyle.scss";
-import { IoMdClose } from "react-icons/io";
-import language from "../../../../public/languages/fa/textinputcomponent.json";
+import { IoMdClose } from 'react-icons/io';
+
+let language = null;
+
 const TextInput = (props: ItextInput) => {
   const [localError, setLocalError] = useState({
     status: false,
-    message: "",
+    message: '',
   });
+  const router = useRouter();
   const TextInput = useRef(null);
+
+  useEffect(() => {
+    if (router.locale) {
+      language =
+        router.locale === 'fa'
+          ? window['locale'].fa.textInputComponent
+          : window['locale'].en.textInputComponent; 
+    }
+  }, [router.locale]);
 
   const ValueHandler = (e) => {
     let value = e.target.value;
@@ -58,7 +70,7 @@ const TextInput = (props: ItextInput) => {
     }
     if (props.number) {
       // remove all the non-numeric char from string
-      value = value.replace(/[^0-9]/g, "");
+      value = value.replace(/[^0-9]/g, '');
     }
     // if the input is not number return the input without any changes
     props.onChangeHandler(value);
@@ -76,7 +88,7 @@ const TextInput = (props: ItextInput) => {
     }
     let value: string | number = props.value;
     if (data.required) {
-      if (props.value === "") {
+      if (props.value === '') {
         setLocalError({
           status: true,
           message: data.messages.required,
@@ -85,19 +97,19 @@ const TextInput = (props: ItextInput) => {
       } else {
         setLocalError({
           status: false,
-          message: "",
+          message: '',
         });
       }
     }
     if (data.number) {
       if (props.number) {
-        if (typeof props.value !== "number")
-          value = Number(props.value.replace(/,/gi, ""));
+        if (typeof props.value !== 'number')
+          value = Number(props.value.replace(/,/gi, ''));
       }
       if (/[^0-9]/g.test(value.toString())) {
         setLocalError({
           status: true,
-          message: language.not_valid,
+          message: language?.not_valid,
         });
       } else if (data.LengthControl) {
         if (data.LengthControl.minLen) {
@@ -136,7 +148,7 @@ const TextInput = (props: ItextInput) => {
       } else {
         setLocalError({
           status: false,
-          message: "",
+          message: '',
         });
       }
     }
@@ -163,7 +175,7 @@ const TextInput = (props: ItextInput) => {
       </label>
       <div className="input_surround">
         <input
-          type={props?.type ? props.type : "text"}
+          type={props?.type ? props.type : 'text'}
           data-test-id="input"
           data-hj-allow
           onInvalid={(e: any) => {
@@ -174,25 +186,25 @@ const TextInput = (props: ItextInput) => {
              */
             if (props.value.length < props.min) {
               e.target.setCustomValidity(
-                `${language.min_length} ${props.min} ${language.characters}`
+                `${language?.min_length} ${props.min} ${language?.characters}`,
               );
             } else if (props.value.length > props.max) {
               e.target.setCustomValidity(
-                `${language.min_length} ${props.max} ${language.characters}`
+                `${language?.min_length} ${props.max} ${language?.characters}`,
               );
             }
           }}
           autoFocus={props.autoFocus}
           className={[
-            "text_input",
-            "data-hj-allow",
-            props.error.status || localError.status ? "inputError" : null,
+            'text_input',
+            'data-hj-allow',
+            props.error.status || localError.status ? 'inputError' : null,
             props?.type
-              ? props.type === "number"
-                ? "change_direction_onfocus"
+              ? props.type === 'number'
+                ? 'change_direction_onfocus'
                 : null
               : null,
-          ].join(" ")}
+          ].join(' ')}
           name={props.name}
           value={
             /**
@@ -214,7 +226,7 @@ const TextInput = (props: ItextInput) => {
              *   Print the current value without change
              */
             props.number
-              ? props.value === ""
+              ? props.value === ''
                 ? props.value.toLocaleString()
                 : props.localeString
                 ? props.value
@@ -223,7 +235,7 @@ const TextInput = (props: ItextInput) => {
             // props.value
           }
           onChange={(e: any) => {
-            e.target.setCustomValidity("");
+            e.target.setCustomValidity('');
             ValueHandler(e);
           }}
           disabled={props.disabled}
@@ -240,7 +252,7 @@ const TextInput = (props: ItextInput) => {
           onFocus={() => {
             setLocalError({
               status: false,
-              message: "",
+              message: '',
             });
           }}
         />

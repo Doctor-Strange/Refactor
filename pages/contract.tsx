@@ -1,7 +1,7 @@
-import { NextSeo } from "next-seo";
-import Contract from "../src/components/contract/contract_for_print";
+import { NextSeo } from 'next-seo';
+import Contract from '../src/components/contract/contract_for_print';
 
-const Contract_Page = () => {
+const Contract_Page = ({ locale }) => {
   // useEffect(() => {
   //   window["dataLayer"].push({
   //     event: "page_view",
@@ -18,11 +18,11 @@ const Contract_Page = () => {
         title="دانلود قرارد | سپریس"
         description="صفحه دانلود قرارداد"
         openGraph={{
-          title: "دانلود قرارد | سپریس",
-          description: "صفحه دانلود قرارداد",
+          title: 'دانلود قرارد | سپریس',
+          description: 'صفحه دانلود قرارداد',
         }}
       />
-      <Contract />
+      <Contract language={locale.contract} />
     </>
   );
 };

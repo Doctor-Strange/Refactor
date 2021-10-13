@@ -6,7 +6,6 @@ const Layout = dynamic(() => import('../src/Layout'));
 const Search = dynamic(() => import('../src/containers/Search'));
 // import Layout from "../src/Layout";
 // import Search from "../src/containers/Search";
-import language from '../public/languages/fa/homepage.json';
 import { guard_controller } from '../utils/guard_controller';
 import ContentHomePage from '../src/components/contentHomePage';
 // import { logPageView } from "../utils/analytics";
@@ -18,7 +17,7 @@ const HomePage = ({ locale }) => {
       event: 'page_view',
       pageURL: window.location.href,
       pagePath: '/',
-      pageTitle: language.next_seo.title,
+      pageTitle: locale.index.next_seo.title,
     });
     const guard = guard_controller();
     if (guard !== 'auth') {
@@ -50,10 +49,10 @@ const HomePage = ({ locale }) => {
           <h2>{locale.index.banner_h2}</h2>
           <div className="search_container responsive">
             {/* Render search box in the Home page */}
-            <Search language={language} />
+            <Search language={locale.index} />
           </div>
         </div>
-        <ContentHomePage auth={authorize} />
+        <ContentHomePage auth={authorize} language={locale.index} />
       </article>
     </Layout>
   );

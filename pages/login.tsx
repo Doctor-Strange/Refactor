@@ -1,26 +1,25 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from 'react';
 
-import { useRouter } from "next/router";
-import { IoMdPerson } from "react-icons/io";
-import { NextSeo } from "next-seo";
-import language from "../public/languages/fa/login.json";
+import { useRouter } from 'next/router';
+import { IoMdPerson } from 'react-icons/io';
+import { NextSeo } from 'next-seo';
 
-import { FaArrowRight } from "react-icons/fa";
-import context_user from "../src/context/User_info";
-import dynamic from "next/dynamic";
+import { FaArrowRight } from 'react-icons/fa';
+import context_user from '../src/context/User_info';
+import dynamic from 'next/dynamic';
 // import { logPageView } from "../utils/analytics";
 // import jsCookie from "js-cookie";
 // import Layout from "../src/Layout";
 
-const Layout = dynamic(() => import("../src/Layout"));
+const Layout = dynamic(() => import('../src/Layout'));
 const ConfirmCode = dynamic(() =>
-  import("../src/containers/header/modals/ConfirmCode")
+  import('../src/containers/header/modals/ConfirmCode'),
 );
 const GetUserCellPhone = dynamic(() =>
-  import("../src/containers/header/modals/GetUserCellPhone")
+  import('../src/containers/header/modals/GetUserCellPhone'),
 );
 
-const LoginPage = () => {
+const LoginPage = ({ locale }) => {
   const [change, setChange] = useState(false);
   const [deactivate_form, set_deactivate_form] = useState(false);
   const user = useContext(context_user);
@@ -31,14 +30,14 @@ const LoginPage = () => {
   };
 
   useEffect(() => {
-    window["dataLayer"].push({
-      event: "page_view",
+    window['dataLayer'].push({
+      event: 'page_view',
       pageURL: window.location.href,
-      pagePath: "/login",
-      pageTitle: language.next_seo.title,
+      pagePath: '/login',
+      pageTitle: locale.login.next_seo.title,
     });
 
-    if (window["auth"]) {
+    if (window['auth']) {
       set_deactivate_form(true);
       // if (localStorage["history"] !== "/add-car") window.history.go(-1);
       // else router.push("/add-car");
@@ -54,24 +53,24 @@ const LoginPage = () => {
   return (
     <Layout>
       <NextSeo
-        title={language.next_seo.title}
-        description={language.next_seo.description}
+        title={locale.login.next_seo.title}
+        description={locale.login.next_seo.description}
         openGraph={{
-          title: language.next_seo.title,
-          description: language.next_seo.description,
+          title: locale.login.next_seo.title,
+          description: locale.login.next_seo.description,
         }}
         twitter={{
-          handle: language.next_seo.handle,
-          site: language.next_seo.site,
-          cardType: language.next_seo.cardType,
+          handle: locale.login.next_seo.handle,
+          site: locale.login.next_seo.site,
+          cardType: locale.login.next_seo.cardType,
         }}
       />
       <div className="Please_login_container minHeight">
         <div
           className={[
-            "modal_box",
-            change ? "confirm_code" : "login_modal",
-          ].join(" ")}
+            'modal_box',
+            change ? 'confirm_code' : 'login_modal',
+          ].join(' ')}
         >
           {change ? (
             <div className="login_modal_title_confirm_code">
@@ -81,7 +80,7 @@ const LoginPage = () => {
                 color="#4ba3ce"
                 className="login_person_icon"
               />
-              <h2>{language.ConfirmCode.confirm_code_title}</h2>
+              <h2>{locale.login.ConfirmCode.confirm_code_title}</h2>
             </div>
           ) : (
             <div className="login_modal_title">
@@ -90,19 +89,19 @@ const LoginPage = () => {
                 color="#fff"
                 className="login_person_icon"
               />
-              <h2>{language.GetUserCellPhone.log_sigh}</h2>
+              <h2>{locale.login.GetUserCellPhone.log_sigh}</h2>
             </div>
           )}
           {change ? (
             <ConfirmCode
-              language={language.ConfirmCode}
+              language={locale.login.ConfirmCode}
               panelController={panelController}
               customModalControl={true}
               deactivate_form={deactivate_form}
             />
           ) : (
             <GetUserCellPhone
-              language={language.GetUserCellPhone}
+              language={locale.login.GetUserCellPhone}
               data-test-id="GetUserCellPhone"
               panelController={panelController}
               deactivate_form={deactivate_form}

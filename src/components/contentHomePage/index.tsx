@@ -8,6 +8,7 @@ const ContentHomePage = ({
   differentStyle,
   extraContent,
   abTest,
+  language,
 }: IContentHomePage) => (
   <div className="responsive second_part_container">
     <div
@@ -90,6 +91,7 @@ interface IContentHomePage {
   differentStyle?: boolean;
   extraContent?: any;
   abTest?: boolean;
+  language: { [key: string]: string };
 }
 
 export default ContentHomePage;

@@ -12,31 +12,10 @@ import insurance from '../../public/image/SamanInsurance.png';
 import Link from 'next/link';
 import { REQUEST_GET_LANDING_PAGE } from '../../src/API';
 // import Accordion from "../../src/components/Accordion";
-import language from '../../public/languages/fa/rent.json';
 // import { logPageView } from "../../utils/analytics";
 import net_CTX from '../../src/context/internetConnectionCTX';
 import { guard_controller } from '../../utils/guard_controller';
 import ContentHomePage from '../../src/components/contentHomePage';
-
-const extraContentRentPage = (
-  <>
-    <h2>{language.rent_content_h2}</h2>
-    <div className="rent_contnet">
-      <p>{language.rent_content_p_1}</p>
-      <p>{language.rent_content_p_2}</p>
-      <p>{language.rent_content_p_3}</p>
-      <p>
-        <strong>{language.rent_content_p_4}</strong>
-      </p>
-      <p>{language.rent_content_p_5}</p>
-      <p>{language.rent_content_p_6}</p>
-      <p>{language.rent_content_p_7}</p>
-      <p>{language.rent_content_p_8}</p>
-      <p>{language.rent_content_p_9}</p>
-      <p>{language.rent_content_p_10}</p>
-    </div>
-  </>
-);
 
 const question_set = [
   {
@@ -51,17 +30,37 @@ const question_set = [
   },
 ];
 
-const Rent = () => {
+const Rent = ({ locale }) => {
   const [dynamicLinks, setDynamicLinks] = useState(null);
   const netCTX = useContext(net_CTX);
   const [authorize, set_authorize] = useState(true);
+
+  const extraContentRentPage = (
+    <>
+      <h2>{locale.rent.rent_content_h2}</h2>
+      <div className="rent_contnet">
+        <p>{locale.rent.rent_content_p_1}</p>
+        <p>{locale.rent.rent_content_p_2}</p>
+        <p>{locale.rent.rent_content_p_3}</p>
+        <p>
+          <strong>{locale.rent.rent_content_p_4}</strong>
+        </p>
+        <p>{locale.rent.rent_content_p_5}</p>
+        <p>{locale.rent.rent_content_p_6}</p>
+        <p>{locale.rent.rent_content_p_7}</p>
+        <p>{locale.rent.rent_content_p_8}</p>
+        <p>{locale.rent.rent_content_p_9}</p>
+        <p>{locale.rent.rent_content_p_10}</p>
+      </div>
+    </>
+  );
 
   useEffect(() => {
     window['dataLayer'].push({
       event: 'page_view',
       pageURL: window.location.href,
       pagePath: '/rent',
-      pageTitle: language.next_seo.title,
+      pageTitle: locale.rent.next_seo.title,
     });
     const guard = guard_controller();
     if (guard !== 'auth') {
@@ -88,28 +87,32 @@ const Rent = () => {
     <Layout>
       <NextSeo
         canonical="https://sepris.com/rent"
-        title={language.next_seo.title}
-        description={language.next_seo.description}
+        title={locale.rent.next_seo.title}
+        description={locale.rent.next_seo.description}
         openGraph={{
-          title: language.next_seo.title,
-          description: language.next_seo.description,
-          site_name: language.next_seo.site_name,
+          title: locale.rent.next_seo.title,
+          description: locale.rent.next_seo.description,
+          site_name: locale.rent.next_seo.site_name,
         }}
         twitter={{
-          handle: language.next_seo.handle,
-          site: language.next_seo.site,
-          cardType: language.next_seo.cardType,
+          handle: locale.rent.next_seo.handle,
+          site: locale.rent.next_seo.site,
+          cardType: locale.rent.next_seo.cardType,
         }}
       />
       <article className="Homepage">
         <div className="banner">
-          <h1>{language.banner_h1}</h1>
-          <h2>{language.banner_h2}</h2>
+          <h1>{locale.rent.banner_h1}</h1>
+          <h2>{locale.rent.banner_h2}</h2>
           <div className="search_container responsive">
-            <Search language={language} />
+            <Search language={locale.rent} />
           </div>
         </div>
-        <ContentHomePage auth={authorize} extraContent={extraContentRentPage} />
+        <ContentHomePage
+          auth={authorize}
+          extraContent={extraContentRentPage}
+          language={locale.rent}
+        />
         <div
           itemScope
           itemType="https://schema.org/FAQPage"

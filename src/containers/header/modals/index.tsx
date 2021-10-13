@@ -9,8 +9,7 @@ import Owner from "./Owner";
 import Law from "./Law";
 import ImageModal from "./imageModal/imageModal";
 import Assurance from "./Assurance";
-import ConfirmDelete from "./ConfirmDelete";
-import language from "../../../../public/languages/fa/modals.json";
+import ConfirmDelete from "./ConfirmDelete"; 
 import { FaArrowRight } from "react-icons/fa";
 const Modals = (props) => {
   const [change, setChange] = useState(false);
@@ -49,28 +48,31 @@ const Modals = (props) => {
       >
         {/* close Icon */}
         <div className="modal_box_div">
-          {props.modal_type === "Login" ? (
-            change ? (
-              <div className="login_modal_title_confirm_code">
-                <FaArrowRight
-                  onClick={panelController}
-                  size="2rem"
-                  color="#4ba3ce"
-                  className="login_person_icon"
-                />
-                <h2>{language.ConfirmCode.confirm_code_title}</h2>
-              </div>
-            ) : (
-              <div className="login_modal_title">
-                <IoMdPerson
-                  size="2rem"
-                  color="#fff"
-                  className="login_person_icon"
-                />
-                <h2>{language.GetUserCellPhone.log_sigh}</h2>
-              </div>
-            )
-          ) : props.modal_type === "ImageModal" ? null : (
+          {
+          // props.modal_type === "Login" ? (
+          //   change ? (
+          //     <div className="login_modal_title_confirm_code">
+          //       <FaArrowRight
+          //         onClick={panelController}
+          //         size="2rem"
+          //         color="#4ba3ce"
+          //         className="login_person_icon"
+          //       />
+          //       <h2>{language.ConfirmCode.confirm_code_title}</h2>
+          //     </div>
+          //   ) : (
+          //     <div className="login_modal_title">
+          //       <IoMdPerson
+          //         size="2rem"
+          //         color="#fff"
+          //         className="login_person_icon"
+          //       />
+          //       <h2>{language.GetUserCellPhone.log_sigh}</h2>
+          //     </div>
+          //   )
+          // ) : 
+          
+          props.modal_type === "ImageModal" ? null : (
             <IoMdClose
               className="close_btn"
               color="rgb(165, 165, 165)"

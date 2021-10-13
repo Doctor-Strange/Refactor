@@ -1,51 +1,50 @@
-import { useEffect } from "react";
-import dynamic from "next/dynamic";
+import { useEffect } from 'react';
+import dynamic from 'next/dynamic';
 
-const Layout = dynamic(() => import("../src/Layout"));
-const Button = dynamic(() => import("../src/components/form/Button"));
+const Layout = dynamic(() => import('../src/Layout'));
+const Button = dynamic(() => import('../src/components/form/Button'));
 // import Layout from "../src/Layout";
-import { useRouter } from "next/router";
-import { IoIosCloseCircleOutline } from "react-icons/io";
+import { useRouter } from 'next/router';
+import { IoIosCloseCircleOutline } from 'react-icons/io';
 // import Button from "../src/components/form/Button";
-import { NextSeo } from "next-seo";
-import language from "../public/languages/fa/paymentfaild.json";
+import { NextSeo } from 'next-seo';
 // import { logPageView } from "../utils/analytics";
 
-const Failed_payment = () => {
+const Failed_payment = ({ locale }) => {
   const router = useRouter();
   useEffect(() => {
-    window["dataLayer"].push({
-      event: "page_view",
+    window['dataLayer'].push({
+      event: 'page_view',
       pageURL: window.location.href,
-      pagePath: "/payment-failed",
-      pageTitle: language.next_seo.title,
+      pagePath: '/payment-failed',
+      pageTitle: locale.paymentFaild.next_seo.title,
     });
     // logPageView();
   }, []);
   return (
     <Layout>
       <NextSeo
-        title={language.next_seo.title}
-        description={language.next_seo.description}
+        title={locale.paymentFaild.next_seo.title}
+        description={locale.paymentFaild.next_seo.description}
         openGraph={{
-          title: language.next_seo.title,
-          description: language.next_seo.description,
+          title: locale.paymentFaild.next_seo.title,
+          description: locale.paymentFaild.next_seo.description,
         }}
         twitter={{
-          handle: language.next_seo.handle,
-          site: language.next_seo.site,
-          cardType: language.next_seo.cardType,
+          handle: locale.paymentFaild.next_seo.handle,
+          site: locale.paymentFaild.next_seo.site,
+          cardType: locale.paymentFaild.next_seo.cardType,
         }}
       />
       <article className="responsive minHeight failed_payment">
         <section className="alarm_container">
           <IoIosCloseCircleOutline size="10rem" color="a3678b" />
-          <p>{language.cancel}</p>
+          <p>{locale.paymentFaild.cancel}</p>
         </section>
         <Button
           class="Blue_BTN local_style"
-          click={() => router.push("/")}
-          value={language.main_page}
+          click={() => router.push('/')}
+          value={locale.paymentFaild.main_page}
           loading={false}
         />
       </article>

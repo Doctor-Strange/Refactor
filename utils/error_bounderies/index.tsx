@@ -1,7 +1,6 @@
-import React from "react";
-import language from "../../public/languages/fa/errorBounderies.json";
+import React from 'react';
 
-class ErrorBounderies extends React.Component<{}, { [key: string]: boolean }> {
+class ErrorBounderies extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = { hasOccur: false };
@@ -9,7 +8,7 @@ class ErrorBounderies extends React.Component<{}, { [key: string]: boolean }> {
 
   static getDerivedStateFromError(error) {
     // Update state so the next render will show the fallback UI.
-    console.log("getDerivedStateFromError", error);
+    console.log('getDerivedStateFromError', error);
     return { hasError: true };
   }
 
@@ -17,10 +16,13 @@ class ErrorBounderies extends React.Component<{}, { [key: string]: boolean }> {
     if (this.state.hasError) {
       return (
         <article className="minHeight errorBounderies">
-          <span>{language.span}</span>
-          <p>{language.p_1}</p>
+          <span>{this.props.language.span}</span>
+          <p>{this.props.language.p_1}</p>
           <p>
-            {language.dial} <a href={`tel:${language.call}`}>{language.call}</a>
+            {this.props.language.dial}{' '}
+            <a href={`tel:${this.props.language.call}`}>
+              {this.props.language.call}
+            </a>
           </p>
         </article>
       );

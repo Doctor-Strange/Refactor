@@ -9,8 +9,7 @@ const Landing_Page_Content = dynamic(() =>
 import { REQUEST_GET_LANDING_PAGE } from '../../src/API';
 import { NextSeo } from 'next-seo';
 // import Landing_Page_Content from "../../src/containers/LandignPageContainer/landingPageContent";
-import Router from 'next/router';
-import language from '../../public/languages/fa/dynamic_pages.json';
+import Router from 'next/router'; 
 // import { logPageView } from "../../utils/analytics";
 
 // const Landing_page_container = dynamic(() =>
@@ -20,7 +19,7 @@ import Landing_page_container from '../../src/containers/LandignPageContainer';
 import { guard_controller } from '../../utils/guard_controller';
 // import ContentHomePage from "../../src/components/contentHomePage";
 
-const Rent_dynamic = ({ Landing_page, content }) => {
+const Rent_dynamic = ({ Landing_page, content,locale }) => {
   const [authorize, set_authorize] = useState(true);
 
   useEffect(() => {
@@ -53,17 +52,17 @@ const Rent_dynamic = ({ Landing_page, content }) => {
         openGraph={{
           title: `${Landing_page.meta_title}`,
           description: Landing_page.meta_description,
-          site_name: language.site_name,
+          site_name: locale.daynamicPage.site_name,
         }}
         twitter={{
-          handle: language.handle,
-          site: language.site,
-          cardType: language.cardType,
+          handle: locale.daynamicPage.handle,
+          site: locale.daynamicPage.site,
+          cardType: locale.daynamicPage.cardType,
         }}
       />
-      <Landing_page_container landing_data={Landing_page} language={language} />
+      <Landing_page_container landing_data={Landing_page} language={locale.daynamicPage} />
       {content === '0' ? null : (
-        <Landing_Page_Content data={Landing_page} language={language} />
+        <Landing_Page_Content data={Landing_page} language={locale.daynamicPage} />
       )}
     </Layout>
   ) : null;

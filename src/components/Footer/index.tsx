@@ -1,37 +1,33 @@
-import * as React from "react";
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import Router from "next/router";
-import language from "../../../public/languages/fa/footer.json";
-import * as car from "../../../public/car_logo_black.svg";
+import * as React from 'react';
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import Router from 'next/router';
+import * as car from '../../../public/car_logo_black.svg';
 // import "./footer.scss";
 import {
   IoIosArrowDropup,
   IoLogoTwitter,
   IoLogoInstagram,
-} from "react-icons/io";
-import { FaTelegram, FaWhatsapp } from "react-icons/fa";
+} from 'react-icons/io';
+import { FaTelegram, FaWhatsapp } from 'react-icons/fa';
 
-const Footer = (props: IFooter) => {
-  const [hide, setHide] = useState(false);
+const Footer = ({ hide, showToTop, LinkControl, language }: IFooter) => {
+  const [hidden, setHidden] = useState(false);
   const [activeToTop, setActiveToTop] = useState(false);
   const [showTop, setShowTop] = useState(false);
 
+  
   // Because the layout render once you should track the hide props for change
   useEffect(() => {
-    if (props.hide) setHide(true);
-  }, [props.hide]);
-
-  // Because the layout render once you should track the hide props for change
-  useEffect(() => {
-    if (props.showToTop) setActiveToTop(true);
-  }, [props.hide]);
+    if (hide) setHidden(true);
+    if (showToTop) setActiveToTop(true);
+  }, [hide]);
 
   // Add an event listener on scroll to show the "Go To Top" button
   useEffect(() => {
-    document.addEventListener("scroll", scrollCheck);
+    document.addEventListener('scroll', scrollCheck);
     return () => {
-      document.removeEventListener("scroll", scrollCheck);
+      document.removeEventListener('scroll', scrollCheck);
     };
   }, []);
 
@@ -53,10 +49,10 @@ const Footer = (props: IFooter) => {
   };
 
   return (
-    <footer data-test-id="footer" className={hide ? "hide_footer" : null}>
+    <footer data-test-id="footer" className={hidden ? 'hide_footer' : null}>
       {activeToTop ? (
         <div
-          className={["toTop", showTop ? "showTop" : null].join(" ")}
+          className={['toTop', showTop ? 'showTop' : null].join(' ')}
           onClick={toTop}
         >
           <IoIosArrowDropup size="4rem" color="#4ba3ce" />
@@ -74,14 +70,14 @@ const Footer = (props: IFooter) => {
               <a>{language.otoli}</a>
             </Link>
           </li>
-          {props.LinkControl ? (
+          {LinkControl ? (
             <li>
               <Link href="/guide-renter" prefetch={false}>
                 <a>{language.guide_renter}</a>
               </Link>
             </li>
           ) : null}
-          {props.LinkControl ? (
+          {LinkControl ? (
             <li>
               <Link href="/evaluation" prefetch={false}>
                 <a>{language.evaluation}</a>
@@ -103,14 +99,14 @@ const Footer = (props: IFooter) => {
               <a>{language.insurance_policies}</a>
             </Link>
           </li>
-          {props.LinkControl ? null : (
+          {LinkControl ? null : (
             <li>
               <Link href="/rent" prefetch={false}>
                 <a>{language.rent}</a>
               </Link>
             </li>
           )}
-          {props.LinkControl ? null : (
+          {LinkControl ? null : (
             <li>
               <Link href="/site-map" prefetch={false}>
                 <a>{language.site_map}</a>
@@ -133,7 +129,7 @@ const Footer = (props: IFooter) => {
             </a>
           </div>
           <p>
-            {" "}
+            {' '}
             {language.social_container_footer_p}
             <a
               href={`tel:${language.social_container_footer_a_1}`}
@@ -176,5 +172,6 @@ interface IFooter {
   hide?: boolean;
   showToTop?: boolean;
   LinkControl?: boolean;
+  language: { [key: string]: string };
 }
 export default Footer;

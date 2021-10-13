@@ -1,25 +1,24 @@
-import { useContext, useEffect, useState } from "react";
-import dynamic from "next/dynamic";
-import net_CTX from "../src/context/internetConnectionCTX";
+import { useContext, useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
+import net_CTX from '../src/context/internetConnectionCTX';
 
-const Layout = dynamic(() => import("../src/Layout"));
+const Layout = dynamic(() => import('../src/Layout'));
 // import Layout from "../src/Layout";
-import { NextSeo } from "next-seo";
-import Link from "next/link";
-import { REQUEST_GET_URLS_FOR_SITE_MAP } from "../src/API";
-import language from "../public/languages/fa/sitemap.json";
+import { NextSeo } from 'next-seo';
+import Link from 'next/link';
+import { REQUEST_GET_URLS_FOR_SITE_MAP } from '../src/API';
 // import { logPageView } from "../utils/analytics";
 
-const Site_map = () => {
+const Site_map = ({ locale }) => {
   const [UrlList, UrlSetter] = useState([]);
   const netCTX = useContext(net_CTX);
 
   useEffect(() => {
-    window["dataLayer"].push({
-      event: "page_view",
+    window['dataLayer'].push({
+      event: 'page_view',
       pageURL: window.location.href,
-      pagePath: "/site-map",
-      pageTitle: language.next_seo.title,
+      pagePath: '/site-map',
+      pageTitle: locale.siteMap.next_seo.title,
     });
     // logPageView();
     fetchAPIs();
@@ -42,16 +41,16 @@ const Site_map = () => {
   return (
     <Layout>
       <NextSeo
-        title={language.next_seo.title}
-        description={language.next_seo.description}
+        title={locale.siteMap.next_seo.title}
+        description={locale.siteMap.next_seo.description}
         openGraph={{
-          title: language.next_seo.title,
-          description: language.next_seo.description,
+          title: locale.siteMap.next_seo.title,
+          description: locale.siteMap.next_seo.description,
         }}
         twitter={{
-          handle: language.next_seo.handle,
-          site: language.next_seo.site,
-          cardType: language.next_seo.cardType,
+          handle: locale.siteMap.next_seo.handle,
+          site: locale.siteMap.next_seo.site,
+          cardType: locale.siteMap.next_seo.cardType,
         }}
       />
       {/* Most of the static pages have a same class named 'static_pages' which set some common style for the main wrapper box*/}
@@ -60,7 +59,7 @@ const Site_map = () => {
           <ul>
             {UrlList.map((i) => {
               return (
-                <li style={{ margin: "5px 0" }} key={i.unique_id}>
+                <li style={{ margin: '5px 0' }} key={i.unique_id}>
                   <Link
                     href="/rent/[id]"
                     as={`/rent/${i.unique_id}`}

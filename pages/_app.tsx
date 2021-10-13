@@ -137,6 +137,10 @@ class App_Otoli extends App {
     const userId = jsCookie.get('user_id');
     const token = jsCookie.get('token');
     const first_name = jsCookie.get('first_name');
+    window['locale'] = {
+      fa: { textInputComponent: fa.textInputComponent },
+      en: { textInputComponent: en.textInputComponent },
+    };
     if (userId) {
       this.get_user_data(userId, token);
       window['auth'] = true;

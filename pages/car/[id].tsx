@@ -4,8 +4,6 @@ import dynamic from "next/dynamic";
 const Layout = dynamic(() => import("../../src/Layout"));
 // const CarPage = dynamic(() => import("../../src/containers/car/carpage"));
 // import Layout from "../../src/Layout";
-
-import language from "../../public/languages/fa/carpage.json";
 // import { logPageView } from "../../utils/analytics";
 import { REQUEST_GET_RENTAL_CAR } from "../../src/API";
 import { useRouter } from "next/router";
@@ -25,7 +23,9 @@ const Car = ({
   start_date,
   end_date,
   _404,
-}) => {
+  locale
+}) => { 
+  
   const router = useRouter();
   useEffect(() => {
     if (_404) {
@@ -42,8 +42,8 @@ const Car = ({
                 : car_Information.owner.first_name +
                   " " +
                   car_Information.owner.last_name
-            } - ${car_Information.car.name.fa}${language.next_seo.title.otoli}`
-          : `${owner_name} - ${car_name}${language.next_seo.title.otoli}`,
+            } - ${car_Information.car.name.fa}${locale.carPage.next_seo.title.otoli}`
+          : `${owner_name} - ${car_name}${locale.carPage.next_seo.title.otoli}`,
         searchedLocation: localStorage["searchedLocation"]
           ? localStorage["searchedLocation"]
           : "",
@@ -63,8 +63,8 @@ const Car = ({
               : car_Information.owner.first_name +
                 " " +
                 car_Information.owner.last_name
-          } - ${car_Information.car.name.fa}${language.next_seo.title.otoli}`}
-          // description={language.next_seo.description}
+          } - ${car_Information.car.name.fa}${locale.carPage.next_seo.title.otoli}`}
+          // description={locale.carPage.next_seo.description}
           openGraph={{
             title: `${
               car_Information.owner.company_name
@@ -72,8 +72,8 @@ const Car = ({
                 : car_Information.owner.first_name +
                   " " +
                   car_Information.owner.last_name
-            } - ${car_Information.car.name.fa}${language.next_seo.title.otoli}`,
-            // description: language.next_seo.description,
+            } - ${car_Information.car.name.fa}${locale.carPage.next_seo.title.otoli}`,
+            // description: locale.carPage.next_seo.description,
             images:
               car_Information.media_set.length !== 0
                 ? [
@@ -85,33 +85,33 @@ const Car = ({
                     },
                   ]
                 : [],
-            site_name: language.next_seo.site_name,
+            site_name: locale.carPage.next_seo.site_name,
           }}
           twitter={{
-            handle: language.next_seo.handle,
-            site: language.next_seo.site,
-            cardType: language.next_seo.cardType,
+            handle: locale.carPage.next_seo.handle,
+            site: locale.carPage.next_seo.site,
+            cardType: locale.carPage.next_seo.cardType,
           }}
         />
       ) : (
         <NextSeo
           noindex={true}
-          title={`${owner_name} - ${car_name}${language.next_seo.title.otoli}`}
-          description={language.next_seo.description}
+          title={`${owner_name} - ${car_name}${locale.carPage.next_seo.title.otoli}`}
+          description={locale.carPage.next_seo.description}
           openGraph={{
-            title: `${owner_name} - ${car_name}${language.next_seo.title.otoli}`,
-            description: language.next_seo.description,
-            site_name: language.next_seo.site_name,
+            title: `${owner_name} - ${car_name}${locale.carPage.next_seo.title.otoli}`,
+            description: locale.carPage.next_seo.description,
+            site_name: locale.carPage.next_seo.site_name,
           }}
           twitter={{
-            handle: language.next_seo.handle,
-            site: language.next_seo.site,
-            cardType: language.next_seo.cardType,
+            handle: locale.carPage.next_seo.handle,
+            site: locale.carPage.next_seo.site,
+            cardType: locale.carPage.next_seo.cardType,
           }}
         />
       )}
       <CarPage
-        language={language}
+        language={locale.carPage}
         is_mine={is_mine}
         car_Information={car_Information}
         initial_search_id={initial_search_id}

@@ -2,10 +2,13 @@ import { useEffect, useReducer, useState, useContext } from 'react';
 import Router from 'next/router';
 
 import dynamic from 'next/dynamic';
-import { Languages } from '../../utils/types/commonTypes';
 
 const Footer = dynamic(() => import('../components/Footer'));
 const Header = dynamic(() => import('../containers/header'));
+
+import fa from '../../public/languages/fa.json';
+import en from '../../public/languages/en.json';
+
 // import Footer from "../components/Footer";
 // import Header from "../containers/header";
 
@@ -48,9 +51,9 @@ const ShowModalReducer = (current, action) => {
 
 let deferredPrompt = null;
 let pwa_flag = false;
-let google_tag_manager_flag = true; 
+let google_tag_manager_flag = true;
 
-const Layout = (props: ILayout) => {
+const Layout = ({ children, hide, showToTop, LinkControl }: ILayout) => {
   /*
     NOTE 
       There are multi-status you can set in modals component.
@@ -109,7 +112,7 @@ const Layout = (props: ILayout) => {
     //   }
     //   return false;
     // });
-    // if (localeCTX.activeLanguage !== Router.router.locale ) {  
+    // if (localeCTX.activeLanguage !== Router.router.locale ) {
     //   localeCTX.changingLanguage(Router.router.locale as Languages );
     // }
     checkToast();
@@ -229,16 +232,31 @@ const Layout = (props: ILayout) => {
               Auth_Manager: (v) => setAuth(v),
             }}
           >
-            <ErrorBounderies>
+            <ErrorBounderies
+              language={
+                localeCTX.activeLanguage === 'fa'
+                  ? fa.errorBounderies
+                  : en.errorBounderies
+              }
+            >
               <Header
                 modalType={modalType}
                 Show_Modal={Show_Modal}
                 // data information is just needed for owner and renter modals
                 data={data}
+                language={
+                  localeCTX.activeLanguage === 'fa' ? fa.header : en.header
+                }
               ></Header>
             </ErrorBounderies>
-            <ErrorBounderies>
-              <main className="minHeight">{props.children}</main>
+            <ErrorBounderies
+              language={
+                localeCTX.activeLanguage === 'fa'
+                  ? fa.errorBounderies
+                  : en.errorBounderies
+              }
+            >
+              <main className="minHeight">{children}</main>
             </ErrorBounderies>
           </auth_context.Provider>
         </modal_context.Provider>
@@ -261,11 +279,18 @@ const Layout = (props: ILayout) => {
           IF you need to hide the footer at the page just pass {true} for "hide".
           you can set the "hide" property anywhere you imported the "layout" component
       */}
-      <ErrorBounderies>
+      <ErrorBounderies
+        language={
+          localeCTX.activeLanguage === 'fa'
+            ? fa.errorBounderies
+            : en.errorBounderies
+        }
+      >
         <Footer
-          hide={props.hide}
-          showToTop={props.showToTop}
-          LinkControl={props.LinkControl}
+          hide={hide}
+          showToTop={showToTop}
+          LinkControl={LinkControl}
+          language={localeCTX.activeLanguage === 'fa' ? fa.footer : en.footer}
         />
       </ErrorBounderies>
     </>
@@ -273,7 +298,7 @@ const Layout = (props: ILayout) => {
 };
 
 interface ILayout {
-  children: any;
+  children?: any;
   hide?: boolean;
   showToTop?: boolean;
   LinkControl?: boolean;

@@ -1,19 +1,19 @@
-import { useContext, useEffect, useState } from "react";
-import dynamic from "next/dynamic";
+import { useContext, useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 
-const Profile_info = dynamic(() => import("./Profile_info"));
+const Profile_info = dynamic(() => import('./Profile_info'));
 // const Profile_Cars = dynamic(() => import("./Profile_Cars"));
 // import Profile_info from "./Profile_info";
-import Profile_Cars from "./Profile_Cars";
-import jsCookie from "js-cookie";
-import Router from "next/router";
-import { REQUEST_GET_USER_INFO } from "../../API";
-import context_user from "../../context/User_info.js";
-import context_toast from "../../context/Toast_context";
-import { NextSeo } from "next-seo";
-import { guard_controller } from "../../../utils/guard_controller";
-import ErrorHelper from "../../../utils/error_helper";
-import net_CTX from "../../context/internetConnectionCTX";
+import Profile_Cars from './Profile_Cars';
+import jsCookie from 'js-cookie';
+import Router from 'next/router';
+import { REQUEST_GET_USER_INFO } from '../../API';
+import context_user from '../../context/User_info.js';
+import context_toast from '../../context/Toast_context';
+import { NextSeo } from 'next-seo';
+import { guard_controller } from '../../../utils/guard_controller';
+import ErrorHelper from '../../../utils/error_helper';
+import net_CTX from '../../context/internetConnectionCTX';
 
 const Profile_container = ({ language }: IProfile_container) => {
   const [is_mine, setIs_mine] = useState(false);
@@ -28,15 +28,17 @@ const Profile_container = ({ language }: IProfile_container) => {
   }, []);
 
   const fetchApi = async () => {
-    const user_id = jsCookie.get("user_id");
+    const user_id = jsCookie.get('user_id');
     try {
       const user_cars_info: any = await REQUEST_GET_USER_INFO({
         id: Router.router.query.id
           ? Router.router.query.id
-          : location.pathname.split("/")[2],
+          : Router.router.locale !== 'fa'
+          ? location.pathname.split('/')[3]
+          : location.pathname.split('/')[2],
       });
-      window["dataLayer"].push({
-        event: "page_view",
+      window['dataLayer'].push({
+        event: 'page_view',
         pageURL: window.location.href,
         pagePath: `/user/${user_cars_info.id}`,
         pageTitle: `${language.next_seo.title.start}${
@@ -48,7 +50,7 @@ const Profile_container = ({ language }: IProfile_container) => {
       if (user_id == user_cars_info.id) {
         setIs_mine(true);
         const guard = guard_controller();
-        if (guard !== "auth") {
+        if (guard !== 'auth') {
           Router.router.push(`/${guard}`);
           return;
         }
@@ -63,10 +65,10 @@ const Profile_container = ({ language }: IProfile_container) => {
           message: error.response
             ? ErrorHelper({
                 errorObj: error.response,
-                _400Message: "خطا در دریافت اطلاعات کاربری.",
+                _400Message: 'خطا در دریافت اطلاعات کاربری.',
               })
             : error,
-          color: "#ed9026",
+          color: '#ed9026',
           time: 0,
           autoClose: false,
         });

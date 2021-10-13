@@ -5,44 +5,43 @@ const Layout = dynamic(() => import("../src/Layout"));
 // import Layout from "../src/Layout";
 import { NextSeo } from "next-seo";
 import Link from "next/link";
-import _500 from "../public/image/500.png";
-import language from "../public/languages/fa/_500.json";
+import _500 from "../public/image/500.png"; 
 // import { logPageView } from "../utils/analytics";
 
-const page_500 = () => {
+const page_500 = ({locale}) => {
   useEffect(() => {
     window["dataLayer"].push({
       event: "page_view",
       pageURL: window.location.href,
       pagePath: "/500",
-      pageTitle: language.title,
+      pageTitle: locale._500.title,
     });
     // logPageView();
   }, []);
   return (
     <Layout>
       <NextSeo
-        title={language.title}
-        description={language.description}
+        title={locale._500.title}
+        description={locale._500.description}
         openGraph={{
-          title: language.title,
-          description: language.description,
+          title: locale._500.title,
+          description: locale._500.description,
         }}
         twitter={{
-          handle: language.handle,
-          site: language.site,
-          cardType: language.cardType,
+          handle: locale._500.handle,
+          site: locale._500.site,
+          cardType: locale._500.cardType,
         }}
       />
       <article className="minHeight _500container">
         <img src={_500} alt="500" className="_404PageImage" />
-        <span>{language.span}</span>
-        <p>{language.p_1}</p>
+        <span>{locale._500.span}</span>
+        <p>{locale._500.p_1}</p>
         <p>
-          {language.dial} <a href={`tel:${language.call}`}>{language.call}</a>
+          {locale._500.dial} <a href={`tel:${locale._500.call}`}>{locale._500.call}</a>
         </p>
         <Link href="/" prefetch={false}>
-          <a className="_404PageAnchor Blue_BTN">{language.return}</a>
+          <a className="_404PageAnchor Blue_BTN">{locale._500.return}</a>
         </Link>
       </article>
     </Layout>

@@ -14,7 +14,7 @@ let img_profile = null;
 let profile = null;
 let user_id = null;
 
-const Menu = () => {
+const Menu = ({ language }: IMenu) => {
   const [spinner, set_spinner] = useState(false);
   const [en, setEn] = useState();
   const user = useContext(context_user);
@@ -126,7 +126,7 @@ const Menu = () => {
       <li
         onClick={() => {
           local.changingLanguage(local.activeLanguage === 'en' ? 'fa' : 'en');
-          router.push('/', '/', {
+          router.push(router.pathname, router.asPath, {
             locale: local.activeLanguage === 'en' ? 'fa' : 'en',
           });
         }}
@@ -199,5 +199,9 @@ const Menu = () => {
     </ul>
   );
 };
+
+interface IMenu {
+  language: { [key: string]: string };
+}
 
 export default Menu;

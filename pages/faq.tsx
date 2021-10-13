@@ -9,11 +9,10 @@ const Spinner = dynamic(() => import("../src/components/Spinner"));
 // import Layout from "../src/Layout";
 import { REQUEST_GET_FAQ } from "../src/API";
 // import Accordion from "../src/components/Accordion";
-// import Spinner from "../src/components/Spinner";
-import language from "../public/languages/fa/faq.json";
+// import Spinner from "../src/components/Spinner"; 
 // import { logPageView } from "../utils/analytics";
 
-const FAQ = () => {
+const FAQ = ({locale}) => {
   const [items, setItems] = useState([]);
   const netCTX = useContext(net_CTX);
   useEffect(() => {
@@ -21,7 +20,7 @@ const FAQ = () => {
       event: "page_view",
       pageURL: window.location.href,
       pagePath: "/faq",
-      pageTitle: language.next_seo.title,
+      pageTitle: locale.faq.next_seo.title,
     });
     // logPageView();
     fetchAPI();
@@ -39,20 +38,20 @@ const FAQ = () => {
   return (
     <Layout showToTop={true}>
       <NextSeo
-        title={language.next_seo.title}
-        description={language.next_seo.description}
+        title={locale.faq.next_seo.title}
+        description={locale.faq.next_seo.description}
         openGraph={{
-          title: language.next_seo.title,
-          description: language.next_seo.description,
+          title: locale.faq.next_seo.title,
+          description: locale.faq.next_seo.description,
         }}
         twitter={{
-          handle: language.next_seo.handle,
-          site: language.next_seo.site,
-          cardType: language.next_seo.cardType,
+          handle: locale.faq.next_seo.handle,
+          site: locale.faq.next_seo.site,
+          cardType: locale.faq.next_seo.cardType,
         }}
       />
       <article className="responsive minHeight FAQ_Page">
-        <h1>{language.h1}</h1>
+        <h1>{locale.faq.h1}</h1>
         {items.length > 0 ? (
           items.map((item, i) => {
             return (
@@ -66,7 +65,7 @@ const FAQ = () => {
         ) : (
           <div className="load_content">
             <Spinner display="inline-block" width={20} color="#737373" />
-            <span>{language.loading}</span>
+            <span>{locale.faq.loading}</span>
           </div>
         )}
       </article>

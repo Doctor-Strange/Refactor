@@ -1,42 +1,41 @@
-import { useEffect } from "react";
-import dynamic from "next/dynamic";
+import { useEffect } from 'react';
+import dynamic from 'next/dynamic';
 
-const Layout = dynamic(() => import("../src/Layout"));
+const Layout = dynamic(() => import('../src/Layout'));
 const Set_car_timing = dynamic(() =>
-  import("../src/containers/Set_car_timing")
+  import('../src/containers/Set_car_timing'),
 );
 // import Layout from "../src/Layout";
 // import Set_car_timing from "../src/containers/Set_car_timing";
-import { NextSeo } from "next-seo";
-import language from "../public/languages/fa/setcartimig.json";
+import { NextSeo } from 'next-seo';
 // import { logPageView } from "../utils/analytics";
 
-const SetTimeAndPrice = () => {
+const SetTimeAndPrice = ({ locale }) => {
   useEffect(() => {
-    window["dataLayer"].push({
-      event: "page_view",
+    window['dataLayer'].push({
+      event: 'page_view',
       pageURL: window.location.href,
-      pagePath: "/set-car-timing",
-      pageTitle: language.next_seo.title,
+      pagePath: '/set-car-timing',
+      pageTitle: locale.setCarTiming.next_seo.title,
     });
     // logPageView();
   }, []);
   return (
     <Layout LinkControl={true}>
       <NextSeo
-        title={language.next_seo.title}
-        description={language.next_seo.description}
+        title={locale.setCarTiming.next_seo.title}
+        description={locale.setCarTiming.next_seo.description}
         openGraph={{
-          title: language.next_seo.title,
-          description: language.next_seo.description,
+          title: locale.setCarTiming.next_seo.title,
+          description: locale.setCarTiming.next_seo.description,
         }}
         twitter={{
-          handle: language.next_seo.handle,
-          site: language.next_seo.site,
-          cardType: language.next_seo.cardType,
+          handle: locale.setCarTiming.next_seo.handle,
+          site: locale.setCarTiming.next_seo.site,
+          cardType: locale.setCarTiming.next_seo.cardType,
         }}
       />
-      <Set_car_timing language={language} />
+      <Set_car_timing language={locale.setCarTiming} />
     </Layout>
   );
 };

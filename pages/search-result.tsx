@@ -4,14 +4,13 @@ import dynamic from "next/dynamic";
 const Layout = dynamic(() => import("../src/Layout"));
 // const Search_result = dynamic(() => import("../src/containers/Search_result"));
 // import Layout from "../src/Layout";
-import { NextSeo } from "next-seo";
-import language from "../public/languages/fa/searchresult.json";
+import { NextSeo } from "next-seo"; 
 // import { logPageView } from "../utils/analytics";
 import { payBackInString } from "../utils/date-range-creator";
 import Search_result from "../src/containers/Search_result";
 import { useRouter } from "next/router";
 
-const SearchResult = ({ page_title }) => {
+const SearchResult = ({ page_title, locale }) => {
   const router = useRouter();
   useEffect(() => {
     const searchedLocation = localStorage["searchedLocation"]
@@ -24,7 +23,7 @@ const SearchResult = ({ page_title }) => {
       event: "page_view",
       pageURL: window.location.href,
       pagePath: "/search-result",
-      pageTitle: `${language.next_seo.title.start}${language.next_seo.title.otoli}`,
+      pageTitle: `${locale.searchResult.next_seo.title.start}${locale.searchResult.next_seo.title.otoli}`,
       searchedLocation,
     });
     // logPageView();
@@ -33,20 +32,20 @@ const SearchResult = ({ page_title }) => {
   return (
     <Layout>
       <NextSeo
-        title={`${language.next_seo.title.start}${language.next_seo.title.otoli}`}
-        description={language.nextSeo_description}
+        title={`${locale.searchResult.next_seo.title.start}${locale.searchResult.next_seo.title.otoli}`}
+        description={locale.searchResult.nextSeo_description}
         openGraph={{
-          title: `${language.next_seo.title.start}${language.next_seo.title.otoli}`,
-          description: language.next_seo.description,
-          site_name: language.next_seo.site_name,
+          title: `${locale.searchResult.next_seo.title.start}${locale.searchResult.next_seo.title.otoli}`,
+          description: locale.searchResult.next_seo.description,
+          site_name: locale.searchResult.next_seo.site_name,
         }}
         twitter={{
-          handle: language.next_seo.handle,
-          site: language.next_seo.site,
-          cardType: language.next_seo.cardType,
+          handle: locale.searchResult.next_seo.handle,
+          site: locale.searchResult.next_seo.site,
+          cardType: locale.searchResult.next_seo.cardType,
         }}
       />
-      <Search_result language={language} />
+      <Search_result language={locale.searchResult} />
     </Layout>
   );
 };
