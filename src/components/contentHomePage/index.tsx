@@ -1,4 +1,3 @@
-import language from '../../../public/languages/fa/homepage.json';
 import insurance from '../../../public/image/SamanInsurance.png';
 import Recommendation_section_owl from '../recommendation_section/recommendation_section_owl';
 import Link from 'next/link';

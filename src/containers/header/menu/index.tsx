@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Link from 'next/link';
-import language from '../../../../public/languages/fa/header.json';
 import context_user from '../../../context/User_info';
 import languageCTX from '../../../context/languageCTX';
 import Spinner from '../../../components/Spinner';
